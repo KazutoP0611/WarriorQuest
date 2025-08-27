@@ -21,6 +21,9 @@ public class Player : MonoBehaviour
     public float moveSpeed;
     public float jumpForce = 5;
     public Vector2 wallJumpForce;
+    [Space]
+    public float dashDuration = 0.25f;
+    public float dashSpeed = 20;
 
     [Range(0,1)] public float inAirMoveMultiplier;
     [Range(0, 1)] public float wallSlideMoveMultiplier;
