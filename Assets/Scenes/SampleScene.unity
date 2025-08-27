@@ -652,6 +652,7 @@ GameObject:
   - component: {fileID: 1658806895}
   - component: {fileID: 1658806897}
   - component: {fileID: 1658806896}
+  - component: {fileID: 1658806898}
   m_Layer: 0
   m_Name: Animator
   m_TagString: Untagged
@@ -751,6 +752,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1658806898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658806894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 530ec7b7f73760241a8b8772c6a42557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2092951074
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,6 +795,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33ca52535fc4c7541b842142f0712495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackVelocityArray:
+  - {x: 3, y: 1.5}
+  - {x: 1, y: 0.2}
+  - {x: 4, y: 0.5}
+  attackVelocityDuration: 0.1
+  comboResetTime: 0.5
   moveSpeed: 5
   jumpForce: 12
   wallJumpForce: {x: 6, y: 14}

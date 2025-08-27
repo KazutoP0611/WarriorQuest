@@ -14,10 +14,16 @@ public class Player : MonoBehaviour
     public Player_WallSlideState wallSlideState { get; private set; }
     public Player_WallJumpState wallJumpState { get; private set; }
     public Player_DashState dashState { get; private set; }
+    public Player_BasicAttackState basicAttackState { get; private set; }
+
+
+    [Header("Attack Details")]
+    public Vector2[] attackVelocityArray;
+    public float attackVelocityDuration = 0.1f;
+    public float comboResetTime = 0.5f;
 
 
     [Header("Movement Details")]
-    public Vector2 moveInput { get; private set; }
     public float moveSpeed;
     public float jumpForce = 5;
     public Vector2 wallJumpForce;
@@ -25,10 +31,14 @@ public class Player : MonoBehaviour
     public float dashDuration = 0.25f;
     public float dashSpeed = 20;
 
-    [Range(0,1)] public float inAirMoveMultiplier;
-    [Range(0, 1)] public float wallSlideMoveMultiplier;
+    [Range(0,1)]
+    public float inAirMoveMultiplier;
+    [Range(0, 1)]
+    public float wallSlideMoveMultiplier;
+
     private bool facingRight = true;
     public int facingDirection { get; private set; } = 1;
+    public Vector2 moveInput { get; private set; }
 
 
     [Header("Collision Detection")]
@@ -38,7 +48,6 @@ public class Player : MonoBehaviour
 
     public bool groundDetected { get; private set; }
     public bool wallDetected { get; private set; }
-
 
     private StateMachine stateMachine;
 
@@ -57,6 +66,7 @@ public class Player : MonoBehaviour
         wallSlideState = new Player_WallSlideState(this, stateMachine, "wallSlide");
         wallJumpState = new Player_WallJumpState(this, stateMachine, "jumpFall");
         dashState = new Player_DashState(this, stateMachine, "dash");
+        basicAttackState = new Player_BasicAttackState(this, stateMachine, "basicAttack");
     }
 
     private void OnEnable()
@@ -83,10 +93,16 @@ public class Player : MonoBehaviour
         stateMachine.UpdateActiveState();
     }
 
+    public void CallAnimationTrigger()
+    {
+        stateMachine.currentState.CallAnimationTrigger();
+    }
+
     public void SetVelocity(float xVelocity, float yVelocity)
     {
         rb.linearVelocity = new Vector2(xVelocity, yVelocity);
-        HandleFlip(xVelocity);    }
+        HandleFlip(xVelocity);
+    }
 
     private void HandleFlip(float xVelocity)
     {
