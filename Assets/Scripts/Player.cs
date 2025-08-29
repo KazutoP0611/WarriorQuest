@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -15,12 +16,15 @@ public class Player : MonoBehaviour
     public Player_WallJumpState wallJumpState { get; private set; }
     public Player_DashState dashState { get; private set; }
     public Player_BasicAttackState basicAttackState { get; private set; }
+    public Player_JumpAttackState jumpAttackState { get; private set; }
 
 
     [Header("Attack Details")]
     public Vector2[] attackVelocityArray;
+    public Vector2 jumpAttackVelocity;
     public float attackVelocityDuration = 0.1f;
     public float comboResetTime = 0.5f;
+    private Coroutine queuedAttackCoroutine;
 
 
     [Header("Movement Details")]
@@ -45,6 +49,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float groungCheckDistance;
     [SerializeField] private float wallCheckDistance;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Transform primaryWallDetector;
+    [SerializeField] private Transform secondaryWallDetector;
 
     public bool groundDetected { get; private set; }
     public bool wallDetected { get; private set; }
@@ -67,6 +73,8 @@ public class Player : MonoBehaviour
         wallJumpState = new Player_WallJumpState(this, stateMachine, "jumpFall");
         dashState = new Player_DashState(this, stateMachine, "dash");
         basicAttackState = new Player_BasicAttackState(this, stateMachine, "basicAttack");
+        jumpAttackState = new Player_JumpAttackState(this, stateMachine, "jumpAttack");
+
     }
 
     private void OnEnable()
@@ -91,6 +99,20 @@ public class Player : MonoBehaviour
     {
         HandleCollisionDetection();
         stateMachine.UpdateActiveState();
+    }
+
+    public void EnterAttackStateWithDelay()
+    {
+        if (queuedAttackCoroutine != null)
+            StopCoroutine(queuedAttackCoroutine);
+
+        queuedAttackCoroutine = StartCoroutine(EnterAttackStateWithDelayCoroutine());
+    }
+
+    private IEnumerator EnterAttackStateWithDelayCoroutine()
+    {
+        yield return new WaitForEndOfFrame();
+        stateMachine.ChangeState(basicAttackState);
     }
 
     public void CallAnimationTrigger()
@@ -123,12 +145,14 @@ public class Player : MonoBehaviour
     {
         groundDetected = Physics2D.Raycast(transform.position, Vector2.down, groungCheckDistance, groundLayer);
 
-        wallDetected = Physics2D.Raycast(transform.position, Vector2.right * facingDirection, wallCheckDistance, groundLayer);
+        wallDetected = Physics2D.Raycast(primaryWallDetector.position, Vector2.right * facingDirection, wallCheckDistance, groundLayer)
+            && Physics2D.Raycast(secondaryWallDetector.position, Vector2.right * facingDirection, wallCheckDistance, groundLayer);
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, -groungCheckDistance, 0));
-        Gizmos.DrawLine(transform.position, transform.position + new Vector3(wallCheckDistance * facingDirection, 0, 0));
+        Gizmos.DrawLine(primaryWallDetector.position, primaryWallDetector.position + new Vector3(wallCheckDistance * facingDirection, 0, 0));
+        Gizmos.DrawLine(secondaryWallDetector.position, secondaryWallDetector.position + new Vector3(wallCheckDistance * facingDirection, 0, 0));
     }
 }

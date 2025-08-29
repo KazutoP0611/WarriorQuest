@@ -13,7 +13,7 @@ public class Player_FallState : Player_AiredState
         if (player.groundDetected)
             stateMachine.ChangeState(player.idleState);
 
-        if (player.wallDetected)
+        if (player.wallDetected && rb.linearVelocity.x != 0)
             stateMachine.ChangeState(player.wallSlideState);
     }
 }
