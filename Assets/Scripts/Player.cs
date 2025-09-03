@@ -1,11 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : CharacterEntity
 {
-    public Animator anim { get; private set; }
-    public Rigidbody2D rb { get; private set; }
     public PlayerInputSet input { get; private set; }
+    public Vector2 moveInput { get; private set; }
 
 
     public Player_IdleState idleState { get; private set; }
@@ -34,35 +33,14 @@ public class Player : MonoBehaviour
     [Space]
     public float dashDuration = 0.25f;
     public float dashSpeed = 20;
-
-    [Range(0,1)]
-    public float inAirMoveMultiplier;
-    [Range(0, 1)]
-    public float wallSlideMoveMultiplier;
-
-    private bool facingRight = true;
-    public int facingDirection { get; private set; } = 1;
-    public Vector2 moveInput { get; private set; }
+    [Range(0, 1)] public float inAirMoveMultiplier;
+    [Range(0, 1)] public float wallSlideMoveMultiplier;
 
 
-    [Header("Collision Detection")]
-    [SerializeField] private float groungCheckDistance;
-    [SerializeField] private float wallCheckDistance;
-    [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private Transform primaryWallDetector;
-    [SerializeField] private Transform secondaryWallDetector;
-
-    public bool groundDetected { get; private set; }
-    public bool wallDetected { get; private set; }
-
-    private StateMachine stateMachine;
-
-    void Awake()
+    protected override void Awake()
     {
-        anim = GetComponentInChildren<Animator>();
-        rb = GetComponent<Rigidbody2D>();
+        base.Awake();
 
-        stateMachine = new StateMachine();
         input = new PlayerInputSet();
 
         idleState = new Player_IdleState(this, stateMachine, "idle");
@@ -74,7 +52,6 @@ public class Player : MonoBehaviour
         dashState = new Player_DashState(this, stateMachine, "dash");
         basicAttackState = new Player_BasicAttackState(this, stateMachine, "basicAttack");
         jumpAttackState = new Player_JumpAttackState(this, stateMachine, "jumpAttack");
-
     }
 
     private void OnEnable()
@@ -90,15 +67,11 @@ public class Player : MonoBehaviour
         input.Disable();
     }
 
-    private void Start()
+    protected override void Start()
     {
-        stateMachine.Initialize(idleState);
-    }
+        base.Start();
 
-    private void Update()
-    {
-        HandleCollisionDetection();
-        stateMachine.UpdateActiveState();
+        stateMachine.Initialize(idleState);
     }
 
     public void EnterAttackStateWithDelay()
@@ -113,46 +86,5 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         stateMachine.ChangeState(basicAttackState);
-    }
-
-    public void CallAnimationTrigger()
-    {
-        stateMachine.currentState.CallAnimationTrigger();
-    }
-
-    public void SetVelocity(float xVelocity, float yVelocity)
-    {
-        rb.linearVelocity = new Vector2(xVelocity, yVelocity);
-        HandleFlip(xVelocity);
-    }
-
-    private void HandleFlip(float xVelocity)
-    {
-        if (xVelocity > 0 && facingRight == false)
-            Flip();
-        else if (xVelocity < 0 && facingRight)
-            Flip();
-    }
-
-    public void Flip()
-    {
-        transform.Rotate(0, 180, 0);
-        facingRight = !facingRight;
-        facingDirection = facingRight ? 1 : -1;
-    }
-
-    private void HandleCollisionDetection()
-    {
-        groundDetected = Physics2D.Raycast(transform.position, Vector2.down, groungCheckDistance, groundLayer);
-
-        wallDetected = Physics2D.Raycast(primaryWallDetector.position, Vector2.right * facingDirection, wallCheckDistance, groundLayer)
-            && Physics2D.Raycast(secondaryWallDetector.position, Vector2.right * facingDirection, wallCheckDistance, groundLayer);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, -groungCheckDistance, 0));
-        Gizmos.DrawLine(primaryWallDetector.position, primaryWallDetector.position + new Vector3(wallCheckDistance * facingDirection, 0, 0));
-        Gizmos.DrawLine(secondaryWallDetector.position, secondaryWallDetector.position + new Vector3(wallCheckDistance * facingDirection, 0, 0));
     }
 }

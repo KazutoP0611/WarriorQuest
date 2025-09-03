@@ -12,7 +12,7 @@ public class ParallaxBackground : MonoBehaviour
     {
         mainCamera = Camera.main;
         cameraHalfWidth = mainCamera.orthographicSize/* This will give you the Camera's half height*/ * mainCamera.aspect;
-        CalculateImageLength();
+        InitializeLayers();
     }
 
     private void FixedUpdate()
@@ -34,7 +34,7 @@ public class ParallaxBackground : MonoBehaviour
         }
     }
 
-    public void CalculateImageLength()
+    public void InitializeLayers()
     {
         foreach (ParallaxLayer layer in backgroundLayers)
             layer.CalculateImageWidth();
