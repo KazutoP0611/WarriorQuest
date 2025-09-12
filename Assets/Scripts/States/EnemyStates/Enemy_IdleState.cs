@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Enemy_IdleState : EnemyState
+public class Enemy_IdleState : Enemy_GroundedState
 {
     public Enemy_IdleState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
@@ -11,7 +11,7 @@ public class Enemy_IdleState : EnemyState
         base.Enter();
 
         stateTimer = enemy.useRandomIdleTime ? Random.Range((int)enemy.idleTimeRange.x, (int)enemy.idleTimeRange.y) : enemy.idleTimeRange.x;
-        Debug.LogWarning($"Idle time of this wait time: {stateTimer}");
+        //Debug.LogWarning($"Idle time of this wait time: {stateTimer}");
     }
 
     public override void Update()

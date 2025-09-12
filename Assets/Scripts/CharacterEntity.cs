@@ -11,9 +11,9 @@ public class CharacterEntity : MonoBehaviour
 
 
     [Header("Collision Detection")]
+    [SerializeField] protected LayerMask groundLayer;
     [SerializeField] private float groungCheckDistance;
     [SerializeField] private float wallCheckDistance;
-    [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform primaryWallDetector;
     [SerializeField] private Transform secondaryWallDetector;
     [SerializeField] private Transform groundCheck;
@@ -79,7 +79,7 @@ public class CharacterEntity : MonoBehaviour
             wallDetected = Physics2D.Raycast(primaryWallDetector.position, Vector2.right * facingDirection, wallCheckDistance, groundLayer);
     }
 
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         Gizmos.DrawLine(groundCheck.position, groundCheck.position + new Vector3(0, -groungCheckDistance, 0));
         Gizmos.DrawLine(primaryWallDetector.position, primaryWallDetector.position + new Vector3(wallCheckDistance * facingDirection, 0, 0));

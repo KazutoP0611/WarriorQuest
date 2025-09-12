@@ -1,16 +1,59 @@
 using UnityEngine;
 
-public class Enemy_BattleState : MonoBehaviour
+public class Enemy_BattleState : EnemyState
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private Transform playerTransform;
+
+    public Enemy_BattleState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Enter()
     {
-        
+        base.Enter();
+
+        //if (playerTransform == null)
+        //    playerTransform = enemy.PlayerDetection().transform;
+
+        //if (ShouldRetreat())
+        //{
+        //    rb.linearVelocity = new Vector2(enemy.retreatVelocity.x * -DirectionToPlayer(), enemy.retreatVelocity.y);
+        //    enemy.HandleFlip(DirectionToPlayer());
+        //}
+
+        Debug.LogWarning("Enter Battle State!!");
+    }
+
+    //public override void Update()
+    //{
+    //    base.Update();
+
+    //    if (BattleTimeOver())
+    //        stateMachine.ChangeState(enemy.enemyIdleState);
+
+    //    if (WithinAttackRange())
+    //        stateMachine.ChangeState(enemy.enemyAttackState);
+    //    else
+    //        enemy.SetVelocity(enemy.battleMoveSpeed * DirectionToPlayer(), rb.linearVelocity.y);
+    //}
+
+    private bool ShouldRetreat()
+    {
+        return true;
+    }
+
+    private float DirectionToPlayer()
+    {
+        return 0;
+    }
+
+    private bool BattleTimeOver()
+    {
+        return true;
+    }
+
+    private bool WithinAttackRange()
+    {
+        return true;
     }
 }
