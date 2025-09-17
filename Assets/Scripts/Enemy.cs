@@ -9,6 +9,10 @@ public class Enemy : CharacterEntity
     public Enemy_AttackState enemyAttackState;
     public Enemy_BattleState enemyBattleState;
 
+    [Header("Battle Details")]
+    public float battleMoveSpeed = 3.0f;
+    public float attackDistance = 2.0f;
+
     [Header("Movement Details")]
     //public float idleTime;
     public bool useRandomIdleTime = true;
@@ -22,7 +26,6 @@ public class Enemy : CharacterEntity
     [SerializeField] private Transform playerDetectionTransform;
     [SerializeField] private float playerCheckDistance = 10;
     public Vector2 retreatVelocity;
-    public float battleMoveSpeed;
 
     protected override void Awake()
     {
@@ -69,6 +72,12 @@ public class Enemy : CharacterEntity
         Gizmos.DrawLine(
             playerDetectionTransform.position,
             new Vector2(playerDetectionTransform.position.x + (facingDirection * playerCheckDistance), playerDetectionTransform.position.y)
+        );
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(
+            playerDetectionTransform.position,
+            new Vector2(playerDetectionTransform.position.x + (facingDirection * attackDistance), playerDetectionTransform.position.y)
         );
     }
 }

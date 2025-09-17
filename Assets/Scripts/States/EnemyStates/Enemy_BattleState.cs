@@ -21,38 +21,49 @@ public class Enemy_BattleState : EnemyState
         //    enemy.HandleFlip(DirectionToPlayer());
         //}
 
-        Debug.LogWarning("Enter Battle State!!");
+        playerTransform = enemy.PlayerDetection().transform;
     }
 
-    //public override void Update()
-    //{
-    //    base.Update();
+    public override void Update()
+    {
+        base.Update();
 
-    //    if (BattleTimeOver())
-    //        stateMachine.ChangeState(enemy.enemyIdleState);
+        //if (BattleTimeOver())
+        //    stateMachine.ChangeState(enemy.enemyIdleState);
 
-    //    if (WithinAttackRange())
-    //        stateMachine.ChangeState(enemy.enemyAttackState);
-    //    else
-    //        enemy.SetVelocity(enemy.battleMoveSpeed * DirectionToPlayer(), rb.linearVelocity.y);
-    //}
+        if (WithinAttackRange())
+            stateMachine.ChangeState(enemy.enemyAttackState);
+        else
+            enemy.SetVelocity(enemy.battleMoveSpeed * DirectionToPlayer(), rb.linearVelocity.y);
+    }
 
     private bool ShouldRetreat()
     {
         return true;
     }
 
-    private float DirectionToPlayer()
+    private bool WithinAttackRange()
     {
-        return 0;
+        return DistanceToPlayer() <= enemy.attackDistance;
+    }
+
+    private float DistanceToPlayer()
+    {
+        if (playerTransform == null)
+            return float.MaxValue;
+
+        return Mathf.Abs(playerTransform.position.x - enemy.transform.position.x);
+    }
+
+    private int DirectionToPlayer()
+    {
+        if (playerTransform == null)
+            return 0;
+
+        return playerTransform.position.x > enemy.transform.position.x ? 1 : -1;
     }
 
     private bool BattleTimeOver()
-    {
-        return true;
-    }
-
-    private bool WithinAttackRange()
     {
         return true;
     }
