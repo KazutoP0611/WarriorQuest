@@ -10,7 +10,7 @@ public class Enemy_IdleState : Enemy_GroundedState
     {
         base.Enter();
 
-        stateTimer = enemy.useRandomIdleTime ? Random.Range((int)enemy.idleTimeRange.x, (int)enemy.idleTimeRange.y) : enemy.idleTimeRange.x;
+        stateTimer = enemy.useRandomIdleTime ? Random.Range((int)enemy.idleTimeRange.x, (int)enemy.idleTimeRange.y) : (int)enemy.idleTimeRange.x;
         //Debug.LogWarning($"Idle time of this wait time: {stateTimer}");
     }
 

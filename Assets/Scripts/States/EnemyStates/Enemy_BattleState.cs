@@ -3,6 +3,7 @@ using UnityEngine;
 public class Enemy_BattleState : EnemyState
 {
     private Transform playerTransform;
+    private float lastTimeWasInBattle;
 
     public Enemy_BattleState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
@@ -12,40 +13,41 @@ public class Enemy_BattleState : EnemyState
     {
         base.Enter();
 
-        //if (playerTransform == null)
-        //    playerTransform = enemy.PlayerDetection().transform;
+        UpdateBattleTimer();
 
-        //if (ShouldRetreat())
-        //{
-        //    rb.linearVelocity = new Vector2(enemy.retreatVelocity.x * -DirectionToPlayer(), enemy.retreatVelocity.y);
-        //    enemy.HandleFlip(DirectionToPlayer());
-        //}
+        if (playerTransform == null)
+            playerTransform = enemy.GetPlayerReference();
 
-        playerTransform = enemy.PlayerDetection().transform;
+        if (ShouldRetreat())
+        {
+            rb.linearVelocity = new Vector2(enemy.retreatVelocity.x * -DirectionToPlayer(), enemy.retreatVelocity.y);
+            enemy.HandleFlip(DirectionToPlayer());
+        }
     }
 
     public override void Update()
     {
         base.Update();
 
-        //if (BattleTimeOver())
-        //    stateMachine.ChangeState(enemy.enemyIdleState);
+        if (enemy.PlayerDetected())
+            UpdateBattleTimer();
 
-        if (WithinAttackRange())
+        if (BattleTimeOver())
+            stateMachine.ChangeState(enemy.enemyIdleState);
+
+        if (WithinAttackRange() && enemy.PlayerDetected())
             stateMachine.ChangeState(enemy.enemyAttackState);
         else
             enemy.SetVelocity(enemy.battleMoveSpeed * DirectionToPlayer(), rb.linearVelocity.y);
     }
 
-    private bool ShouldRetreat()
-    {
-        return true;
-    }
+    private void UpdateBattleTimer() => lastTimeWasInBattle = Time.time;
 
-    private bool WithinAttackRange()
-    {
-        return DistanceToPlayer() <= enemy.attackDistance;
-    }
+    private bool WithinAttackRange() => DistanceToPlayer() <= enemy.attackDistance;
+
+    private bool BattleTimeOver() => Time.time > (lastTimeWasInBattle + enemy.battleTimeDuration);
+
+    private bool ShouldRetreat() => DistanceToPlayer() < enemy.minRetreatDistance;
 
     private float DistanceToPlayer()
     {
@@ -61,10 +63,5 @@ public class Enemy_BattleState : EnemyState
             return 0;
 
         return playerTransform.position.x > enemy.transform.position.x ? 1 : -1;
-    }
-
-    private bool BattleTimeOver()
-    {
-        return true;
     }
 }

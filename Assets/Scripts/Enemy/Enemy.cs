@@ -12,6 +12,9 @@ public class Enemy : CharacterEntity
     [Header("Battle Details")]
     public float battleMoveSpeed = 3.0f;
     public float attackDistance = 2.0f;
+    public float battleTimeDuration = 5.0f;
+    public float minRetreatDistance = 1.0f;
+    public Vector2 retreatVelocity;
 
     [Header("Movement Details")]
     //public float idleTime;
@@ -25,7 +28,7 @@ public class Enemy : CharacterEntity
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private Transform playerDetectionTransform;
     [SerializeField] private float playerCheckDistance = 10;
-    public Vector2 retreatVelocity;
+    public Transform playerTransform { get; private set; }
 
     protected override void Awake()
     {
@@ -44,7 +47,12 @@ public class Enemy : CharacterEntity
         stateMachine.Initialize(enemyIdleState);
     }
 
-    public RaycastHit2D PlayerDetection()
+    protected override void Update()
+    {
+        base.Update();
+    }
+
+    public RaycastHit2D PlayerDetected()
     {
         RaycastHit2D hit = Physics2D.Raycast(
             playerDetectionTransform.position,
@@ -59,9 +67,21 @@ public class Enemy : CharacterEntity
         return hit;
     }
 
-    public void HandleFlip(float directionToPlayer)
+    public void TryEnterBattleState(Transform playerTransform)
     {
+        if (stateMachine.currentState == enemyBattleState || stateMachine.currentState == enemyAttackState)
+            return;
 
+        this.playerTransform = playerTransform;
+        stateMachine.ChangeState(enemyBattleState);
+    }
+
+    public Transform GetPlayerReference()
+    {
+        if (playerTransform == null)
+            playerTransform = PlayerDetected().transform;
+
+        return playerTransform;
     }
 
     protected override void OnDrawGizmos()
@@ -78,6 +98,12 @@ public class Enemy : CharacterEntity
         Gizmos.DrawLine(
             playerDetectionTransform.position,
             new Vector2(playerDetectionTransform.position.x + (facingDirection * attackDistance), playerDetectionTransform.position.y)
+        );
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(
+            playerDetectionTransform.position,
+            new Vector2(playerDetectionTransform.position.x + (facingDirection * minRetreatDistance), playerDetectionTransform.position.y)
         );
     }
 }

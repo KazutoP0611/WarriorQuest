@@ -18,9 +18,15 @@ public abstract class PlayerState : EntityState
     {
         base.Update();
 
-        anim.SetFloat("yVelocity", rb.linearVelocity.y);
         if (input.Player.Dash.WasPerformedThisFrame() && CanDash())
             stateMachine.ChangeState(player.dashState);
+    }
+
+    public override void UpdateAnimationParameters()
+    {
+        base.UpdateAnimationParameters();
+
+        anim.SetFloat("yVelocity", rb.linearVelocity.y);
     }
 
     private bool CanDash()
