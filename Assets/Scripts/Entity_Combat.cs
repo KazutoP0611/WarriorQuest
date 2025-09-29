@@ -11,10 +11,10 @@ public class Entity_Combat : MonoBehaviour
 
     public void PerformAttack()
     {
-        foreach (Collider2D enemy in GetDetectedColliders())
+        foreach (Collider2D target in GetDetectedColliders())
         {
-            Entity_Health targetHealth = enemy.GetComponent<Entity_Health>();
-            targetHealth?.TakeDamage(damage, transform);
+            IDamagable damagable = target.GetComponent<IDamagable>();
+            damagable?.TakeDamage(damage, transform);
         }
     }
 

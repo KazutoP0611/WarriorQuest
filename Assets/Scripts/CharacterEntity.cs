@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CharacterEntity : MonoBehaviour
@@ -19,7 +21,10 @@ public class CharacterEntity : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     public bool groundDetected { get; private set; }
     public bool wallDetected { get; private set; }
-    
+
+    //Condition Variables
+    private bool isKnocked;
+    private Coroutine knockbackCoroutine;
 
     protected virtual void Awake()
     {
@@ -45,8 +50,30 @@ public class CharacterEntity : MonoBehaviour
         stateMachine.currentState.AnimationTrigger();
     }
 
+    public void RecieveKnockback(Vector2 knockback, float duration)
+    {
+        if (knockbackCoroutine != null)
+            StopCoroutine(knockbackCoroutine);
+
+        knockbackCoroutine = StartCoroutine(Knockback(knockback, duration));
+    }
+
+    private IEnumerator Knockback(Vector2 knockback, float duration)
+    {
+        isKnocked = true;
+        rb.linearVelocity = knockback;
+
+        yield return new WaitForSeconds(duration);
+
+        rb.linearVelocity = Vector2.zero;
+        isKnocked = false;
+    }
+
     public void SetVelocity(float xVelocity, float yVelocity)
     {
+        if (isKnocked)
+            return;
+
         rb.linearVelocity = new Vector2(xVelocity, yVelocity);
         HandleFlip(xVelocity);
     }
@@ -77,6 +104,11 @@ public class CharacterEntity : MonoBehaviour
         }
         else
             wallDetected = Physics2D.Raycast(primaryWallDetector.position, Vector2.right * facingDirection, wallCheckDistance, groundLayer);
+    }
+
+    public virtual void CharacterOnDead()
+    {
+
     }
 
     protected virtual void OnDrawGizmos()

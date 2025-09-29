@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class Player : CharacterEntity
 {
+    public static event Action OnPlayerDead;
     public PlayerInputSet input { get; private set; }
     public Vector2 moveInput { get; private set; }
 
@@ -16,6 +18,7 @@ public class Player : CharacterEntity
     public Player_DashState dashState { get; private set; }
     public Player_BasicAttackState basicAttackState { get; private set; }
     public Player_JumpAttackState jumpAttackState { get; private set; }
+    public Player_DeadState deadState { get; private set; }
 
 
     [Header("Attack Details")]
@@ -52,6 +55,7 @@ public class Player : CharacterEntity
         dashState = new Player_DashState(this, stateMachine, "dash");
         basicAttackState = new Player_BasicAttackState(this, stateMachine, "basicAttack");
         jumpAttackState = new Player_JumpAttackState(this, stateMachine, "jumpAttack");
+        deadState = new Player_DeadState(this, stateMachine, "dead");
     }
 
     private void OnEnable()
@@ -86,5 +90,13 @@ public class Player : CharacterEntity
     {
         yield return new WaitForEndOfFrame();
         stateMachine.ChangeState(basicAttackState);
+    }
+
+    public override void CharacterOnDead()
+    {
+        base.CharacterOnDead();
+
+        OnPlayerDead?.Invoke();
+        stateMachine.ChangeState(deadState);
     }
 }

@@ -8,6 +8,7 @@ public class Enemy : CharacterEntity
     public Enemy_MoveState enemyMoveState;
     public Enemy_AttackState enemyAttackState;
     public Enemy_BattleState enemyBattleState;
+    public Enemy_DeadState enemyDeadState;
 
     [Header("Battle Details")]
     public float battleMoveSpeed = 3.0f;
@@ -15,6 +16,12 @@ public class Enemy : CharacterEntity
     public float battleTimeDuration = 5.0f;
     public float minRetreatDistance = 1.0f;
     public Vector2 retreatVelocity;
+
+    [Header("Dead Details")]
+    [SerializeField] private float fallGravityScale;
+    [SerializeField] private float onDeadJumpVelocity;
+    public float _fallGravityScale { get; private set; }
+    public float _onDeadJumpVelocity { get; private set; }
 
     [Header("Movement Details")]
     //public float idleTime;
@@ -38,6 +45,20 @@ public class Enemy : CharacterEntity
         enemyMoveState = new Enemy_MoveState(this, stateMachine, "move");
         enemyAttackState = new Enemy_AttackState(this, stateMachine, "attack");
         enemyBattleState = new Enemy_BattleState(this, stateMachine, "battle");
+        enemyDeadState = new Enemy_DeadState(this, stateMachine, "idle");
+
+        _fallGravityScale = fallGravityScale;
+        _onDeadJumpVelocity = onDeadJumpVelocity;
+    }
+
+    private void OnEnable()
+    {
+        Player.OnPlayerDead += HandlePlayerDeath;
+    }
+
+    private void OnDisable()
+    {
+        Player.OnPlayerDead -= HandlePlayerDeath;
     }
 
     protected override void Start()
@@ -45,11 +66,6 @@ public class Enemy : CharacterEntity
         base.Start();
 
         stateMachine.Initialize(enemyIdleState);
-    }
-
-    protected override void Update()
-    {
-        base.Update();
     }
 
     public RaycastHit2D PlayerDetected()
@@ -82,6 +98,15 @@ public class Enemy : CharacterEntity
             playerTransform = PlayerDetected().transform;
 
         return playerTransform;
+    }
+
+    private void HandlePlayerDeath() => stateMachine.ChangeState(enemyIdleState);
+
+    public override void CharacterOnDead()
+    {
+        base.CharacterOnDead();
+
+        stateMachine.ChangeState(enemyDeadState);
     }
 
     protected override void OnDrawGizmos()
