@@ -8,6 +8,7 @@ public class Enemy : CharacterEntity
     public Enemy_MoveState enemyMoveState;
     public Enemy_AttackState enemyAttackState;
     public Enemy_BattleState enemyBattleState;
+    public Enemy_StunnedState enemyStunnedState;
     public Enemy_DeadState enemyDeadState;
 
     [Header("Battle Details")]
@@ -16,6 +17,11 @@ public class Enemy : CharacterEntity
     public float battleTimeDuration = 5.0f;
     public float minRetreatDistance = 1.0f;
     public Vector2 retreatVelocity;
+
+    [Header("Stunned Details")]
+    public float stunnedDuration = 1;
+    public Vector2 stunnedVelocity = new Vector2(7, 7);
+    [SerializeField] protected bool canBeStunned = false;
 
     [Header("Dead Details")]
     [SerializeField] private float fallGravityScale;
@@ -45,6 +51,7 @@ public class Enemy : CharacterEntity
         enemyMoveState = new Enemy_MoveState(this, stateMachine, "move");
         enemyAttackState = new Enemy_AttackState(this, stateMachine, "attack");
         enemyBattleState = new Enemy_BattleState(this, stateMachine, "battle");
+        enemyStunnedState = new Enemy_StunnedState(this, stateMachine, "stunned");
         enemyDeadState = new Enemy_DeadState(this, stateMachine, "idle");
 
         _fallGravityScale = fallGravityScale;
@@ -67,6 +74,8 @@ public class Enemy : CharacterEntity
 
         stateMachine.Initialize(enemyIdleState);
     }
+
+    public void EnableCounterWindow(bool enable) => canBeStunned = enable;
 
     public RaycastHit2D PlayerDetected()
     {
