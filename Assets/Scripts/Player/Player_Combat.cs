@@ -7,21 +7,23 @@ public class Player_Combat : Entity_Combat
 
     public bool CounterAttackPerformed()
     {
-        bool hasCounterSomebody = false;
+        bool performedCounter = false;
 
         foreach (var target in GetDetectedColliders())
         {
             ICounterable counterable = target.GetComponent<ICounterable>();
 
-            if (counterable != null)
+            if (counterable == null)
+                continue;
+
+            if (counterable.CanBeCounterd)//use ".CanBeCountered" instead of checking null will make sure that That enemy is in the state that we, player, can counter them.
             {
                 counterable.HandleCounter();
-                //need to refactor this logic a little, player should not go back to idle state immidiately after fail counter, one should stay still (counter animation);
-                hasCounterSomebody = true;
+                performedCounter = true;
             }
         }
 
-        return hasCounterSomebody;
+        return performedCounter;
     }
 
     public float GetCounterRecoveryDuration() => counterRecovery;

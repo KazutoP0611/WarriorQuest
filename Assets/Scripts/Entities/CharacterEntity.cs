@@ -1,16 +1,18 @@
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class CharacterEntity : MonoBehaviour
 {
+    public event Action OnFlipped;
+
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
     protected StateMachine stateMachine;
 
     private bool facingRight = true;
     public int facingDirection { get; private set; } = 1;
-
 
     [Header("Collision Detection")]
     [SerializeField] protected LayerMask groundLayer;
@@ -91,6 +93,8 @@ public class CharacterEntity : MonoBehaviour
         transform.Rotate(0, 180, 0);
         facingRight = !facingRight;
         facingDirection = facingRight ? 1 : -1;
+
+        OnFlipped?.Invoke();
     }
 
     private void HandleCollisionDetection()

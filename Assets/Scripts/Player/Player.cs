@@ -8,7 +8,6 @@ public class Player : CharacterEntity
     public PlayerInputSet input { get; private set; }
     public Vector2 moveInput { get; private set; }
 
-
     public Player_IdleState idleState { get; private set; }
     public Player_MoveState moveState { get; private set; }
     public Player_JumpState jumpState { get; private set; }
@@ -21,14 +20,12 @@ public class Player : CharacterEntity
     public Player_CounterAttackState counterAttackState { get; private set; }
     public Player_DeadState deadState { get; private set; }
 
-
     [Header("Attack Details")]
     public Vector2[] attackVelocityArray;
     public Vector2 jumpAttackVelocity;
     public float attackVelocityDuration = 0.1f;
     public float comboResetTime = 0.5f;
     private Coroutine queuedAttackCoroutine;
-
 
     [Header("Movement Details")]
     public float moveSpeed;
@@ -39,7 +36,6 @@ public class Player : CharacterEntity
     public float dashSpeed = 20;
     [Range(0, 1)] public float inAirMoveMultiplier;
     [Range(0, 1)] public float wallSlideMoveMultiplier;
-
 
     protected override void Awake()
     {

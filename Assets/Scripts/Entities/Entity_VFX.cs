@@ -4,12 +4,15 @@ using UnityEngine.Rendering;
 
 public class Entity_VFX : MonoBehaviour
 {
-    private SpriteRenderer spriteRenderer;
-
-    [Header("On Damage VFX")]
+    [Header("On Taking Damage VFX")]
     [SerializeField] private Material onDamageMaterial;
     [SerializeField] private float onDamageVFXDuration = 0.1f;
 
+    [Header("On Doing Damage VFX")]
+    [SerializeField] private GameObject hitVFX;
+    [SerializeField] private Color doDamageColor = Color.white;
+
+    private SpriteRenderer spriteRenderer;
     private Material originalMaterial;
     private Coroutine onDamageCoroutine;
 
@@ -17,6 +20,12 @@ public class Entity_VFX : MonoBehaviour
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         originalMaterial = spriteRenderer.material;
+    }
+
+    public void OnHitVFX(Transform target)
+    {
+        GameObject vfx = Instantiate(hitVFX, target.position, Quaternion.identity);
+        vfx.GetComponentInChildren<SpriteRenderer>().color = doDamageColor;
     }
 
     public void PlayOnDamageVFX()

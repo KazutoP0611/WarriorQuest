@@ -9,12 +9,24 @@ public class Entity_Combat : MonoBehaviour
     [SerializeField] private float targetCheckRadius = 1.0f;
     [SerializeField] private LayerMask targetLayer;
 
+    private Entity_VFX vfx;
+
+    private void Awake()
+    {
+        vfx = GetComponent<Entity_VFX>();
+    }
+
     public void PerformAttack()
     {
         foreach (Collider2D target in GetDetectedColliders())
         {
             IDamagable damagable = target.GetComponent<IDamagable>();
-            damagable?.TakeDamage(damage, transform);
+
+            if (damagable == null)
+                continue;
+
+            damagable.TakeDamage(damage, transform);
+            vfx.OnHitVFX(target.transform);
         }
     }
 
