@@ -592,7 +592,7 @@ MonoBehaviour:
     strength:
       baseValue: 0
     agility:
-      baseValue: 0
+      baseValue: 100
     intelligence:
       baseValue: 0
     vitality:
@@ -614,7 +614,7 @@ MonoBehaviour:
     armor:
       baseValue: 0
     evasion:
-      baseValue: 0
+      baseValue: 100
     fireRes:
       baseValue: 0
     iceRes:
@@ -8087,7 +8087,7 @@ MonoBehaviour:
     strength:
       baseValue: 0
     agility:
-      baseValue: 0
+      baseValue: 100
     intelligence:
       baseValue: 0
     vitality:
@@ -8109,7 +8109,7 @@ MonoBehaviour:
     armor:
       baseValue: 0
     evasion:
-      baseValue: 0
+      baseValue: 100
     fireRes:
       baseValue: 0
     iceRes:
