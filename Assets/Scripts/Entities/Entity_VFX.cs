@@ -38,6 +38,7 @@ public class Entity_VFX : MonoBehaviour
 
     IEnumerator OnDamageVFXCoroutine()
     {
+        //Change character's material to "set material" on damage for a duration, the nset it back.
         spriteRenderer.material = onDamageMaterial;
         yield return new WaitForSeconds(onDamageVFXDuration);
         spriteRenderer.material = originalMaterial;

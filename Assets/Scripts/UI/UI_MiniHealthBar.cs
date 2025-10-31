@@ -4,9 +4,13 @@ public class UI_MiniHealthBar : MonoBehaviour
 {
     private CharacterEntity entity;
 
-    private void OnEnable()
+    private void Awake()
     {
         entity = GetComponentInParent<CharacterEntity>();
+    }
+
+    private void OnEnable()
+    {
         entity.OnFlipped += HandleFlip;
     }
 

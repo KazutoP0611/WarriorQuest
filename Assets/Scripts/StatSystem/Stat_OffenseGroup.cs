@@ -1,0 +1,16 @@
+using System;
+using UnityEngine;
+
+[Serializable]
+public class Stat_OffenseGroup
+{
+    //Physical damage
+    public Stat damage;
+    public Stat critPower;
+    public Stat critChance;
+
+    //Magic damage
+    public Stat fireDamage;
+    public Stat iceDamage;
+    public Stat lightingDamage;
+}

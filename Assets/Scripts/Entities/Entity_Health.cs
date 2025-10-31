@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class Entity_Health : MonoBehaviour, IDamagable
 {
-    [SerializeField] protected float maxHP = 100.0f;
     [SerializeField] protected float currentHP;
     [SerializeField] protected bool isDead = false;
 
@@ -17,16 +16,20 @@ public class Entity_Health : MonoBehaviour, IDamagable
     [Header("On Heavy Damage")]
     [SerializeField] private float heavyDamageThreshold = 0.3f;
 
-    private Slider healthBar;
-    private Entity_VFX entityVFX;
     private CharacterEntity charEntity;
+    private Entity_Stats stats;
+    private Entity_VFX entityVFX;
+    private Slider healthBar;
 
     protected virtual void Awake()
     {
-        healthBar = GetComponentInChildren<Slider>();
-        entityVFX = GetComponent<Entity_VFX>();
         charEntity = GetComponent<CharacterEntity>();
-        currentHP = maxHP;
+        stats = GetComponent<Entity_Stats>();
+        entityVFX = GetComponent<Entity_VFX>();
+
+        healthBar = GetComponentInChildren<Slider>();
+
+        currentHP = stats.GetMaxHealth();
         UpdateHealthBar();
     }
 
@@ -56,7 +59,7 @@ public class Entity_Health : MonoBehaviour, IDamagable
     {
         if (healthBar == null)
             return;
-        healthBar.value = currentHP / maxHP;
+        healthBar.value = currentHP / stats.GetMaxHealth();
     }
 
     protected void Die()
@@ -75,5 +78,5 @@ public class Entity_Health : MonoBehaviour, IDamagable
 
     private float CalculateDuration(float damage) => IsHeavyDamage(damage) ? heavyKnockbackDuration : knockbackDuration;
 
-    private bool IsHeavyDamage(float damage) => (damage / maxHP) >= heavyDamageThreshold;
+    private bool IsHeavyDamage(float damage) => (damage / stats.GetMaxHealth()) >= heavyDamageThreshold;
 }
