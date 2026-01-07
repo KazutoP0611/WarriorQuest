@@ -5,9 +5,9 @@ public class Enemy_Health : Entity_Health
 {
     private Enemy enemy => GetComponent<Enemy>();
 
-    public override bool TakeDamage(float damage, Transform damageDealer)
+    public override bool TakeDamage(float damage, float elementalDamage, Transform damageDealer)
     {
-        bool gotHit = base.TakeDamage(damage, damageDealer);
+        bool gotHit = base.TakeDamage(damage, elementalDamage, damageDealer);
 
         if (!gotHit)
             return false;
