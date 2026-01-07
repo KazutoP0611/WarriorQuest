@@ -39,18 +39,23 @@ public class Entity_Health : MonoBehaviour, IDamagable
             return false;
 
         if (AttackEvaded())
-        {
-            Debug.Log($"{gameObject.name} has Evaded!!");
             return false;
-        }
 
-        Vector2 knockback = CalculateKnockback(damage, damageDealer);
-        float duration = CalculateDuration(damage);
+        Entity_Stats attackStats = damageDealer.GetComponent<Entity_Stats>();
+        float attackerArmorReduction = attackStats != null ? attackStats.GetArmorReduction() : 0;
+
+        float mitigation = stats.GetArmorMitigation(attackerArmorReduction);
+        float finalDamage = damage * (1 - mitigation);
+
+        Vector2 knockback = CalculateKnockback(finalDamage, damageDealer);
+        float duration = CalculateDuration(finalDamage);
 
         charEntity?.RecieveKnockback(knockback, duration);
         entityVFX?.PlayOnDamageVFX();
-        ReduceHP(damage);
+        ReduceHP(finalDamage);
         
+        Debug.Log($"{finalDamage}");
+
         return true;
     }
 

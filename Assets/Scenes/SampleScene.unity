@@ -369,8 +369,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onDamageMaterial: {fileID: 2100000, guid: 8b016158120ce4a4792453c2d5955306, type: 2}
   onDamageVFXDuration: 0.15
-  hitVFX: {fileID: 0}
   doDamageColor: {r: 1, g: 1, b: 1, a: 1}
+  hitVFX: {fileID: 0}
+  critHitVFX: {fileID: 0}
 --- !u!1 &341213853
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,7 +532,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2bab6be33262046becad05ebe5e729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
   targetCheckTransform: {fileID: 100468734}
   targetCheckRadius: 1
   targetLayer:
@@ -570,8 +570,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onDamageMaterial: {fileID: 2100000, guid: 8b016158120ce4a4792453c2d5955306, type: 2}
   onDamageVFXDuration: 0.15
-  hitVFX: {fileID: 320273418006944707, guid: dfd860a272afe4645903264e1c6c138e, type: 3}
   doDamageColor: {r: 1, g: 0.31139502, b: 0, a: 1}
+  hitVFX: {fileID: 320273418006944707, guid: dfd860a272afe4645903264e1c6c138e, type: 3}
+  critHitVFX: {fileID: 3332369707367497804, guid: 3da6e81394f93a94589ce32d61204fb2, type: 3}
   useAttackAlert: 1
   attackAlert: {fileID: 1911795233}
 --- !u!114 &341213863
@@ -587,12 +588,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entity_Stats
   maxHealth:
-    baseValue: 100
+    baseValue: 1000
   majorStat:
     strength:
       baseValue: 0
     agility:
-      baseValue: 100
+      baseValue: 0
     intelligence:
       baseValue: 0
     vitality:
@@ -604,6 +605,8 @@ MonoBehaviour:
       baseValue: 0
     critChance:
       baseValue: 0
+    armorReduction:
+      baseValue: 0
     fireDamage:
       baseValue: 0
     iceDamage:
@@ -614,7 +617,7 @@ MonoBehaviour:
     armor:
       baseValue: 0
     evasion:
-      baseValue: 100
+      baseValue: 0
     fireRes:
       baseValue: 0
     iceRes:
@@ -1030,7 +1033,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.094431, y: -1.62, z: -9}
+  m_LocalPosition: {x: -2.0933647, y: -1.62, z: -9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8029,8 +8032,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onDamageMaterial: {fileID: 2100000, guid: 8b016158120ce4a4792453c2d5955306, type: 2}
   onDamageVFXDuration: 0.15
-  hitVFX: {fileID: 320273418006944707, guid: dfd860a272afe4645903264e1c6c138e, type: 3}
   doDamageColor: {r: 0.9771824, g: 1, b: 0, a: 1}
+  hitVFX: {fileID: 320273418006944707, guid: dfd860a272afe4645903264e1c6c138e, type: 3}
+  critHitVFX: {fileID: 3332369707367497804, guid: 3da6e81394f93a94589ce32d61204fb2, type: 3}
 --- !u!114 &2092951082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8062,7 +8066,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cd21ed42ba23794aaa19f8602d78a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
   targetCheckTransform: {fileID: 1357984943}
   targetCheckRadius: 1
   targetLayer:
@@ -8087,7 +8090,7 @@ MonoBehaviour:
     strength:
       baseValue: 0
     agility:
-      baseValue: 100
+      baseValue: 0
     intelligence:
       baseValue: 0
     vitality:
@@ -8099,6 +8102,8 @@ MonoBehaviour:
       baseValue: 0
     critChance:
       baseValue: 0
+    armorReduction:
+      baseValue: 0
     fireDamage:
       baseValue: 0
     iceDamage:
@@ -8109,7 +8114,7 @@ MonoBehaviour:
     armor:
       baseValue: 0
     evasion:
-      baseValue: 100
+      baseValue: 0
     fireRes:
       baseValue: 0
     iceRes:

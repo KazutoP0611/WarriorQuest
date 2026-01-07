@@ -3,13 +3,17 @@ using UnityEngine;
 
 public class VFX_Controller : MonoBehaviour
 {
+    [SerializeField] private bool randomOffset = true;
     [SerializeField] private bool autoDestroy = true;
     [SerializeField] private float destroyInSecs = 1.0f;
 
-    [Header("Random After Be Spawned")]
+    [Header("Random Rotation")]
     [SerializeField] private bool randomRotation = true;
     [Space]
-    [SerializeField] private bool randomOffset = true;
+    [SerializeField] private float minRotation = 0;
+    [SerializeField] private float maxRotation = 360;
+
+    [Header("Random Position")]
     [SerializeField] private float xMinOffset = -0.3f;
     [SerializeField] private float xMaxOffset = 0.3f;
     [Space]
@@ -54,7 +58,7 @@ public class VFX_Controller : MonoBehaviour
         if (randomRotation == false)
             return;
 
-        float zRotation = Random.Range(0, 360);
+        float zRotation = Random.Range(minRotation, maxRotation);
         transform.Rotate(0, 0, zRotation);
     }
 }

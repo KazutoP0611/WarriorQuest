@@ -9,19 +9,67 @@ public class Entity_Stats : MonoBehaviour
     public Stat_OffenseGroup offenseStat;
     public Stat_DefenseGroup defenseStat;
 
+    public float GetPhysicalDamage(out bool isCrit)
+    {
+        float baseDamage = offenseStat.damage.GetValue();
+        float bonusDamage = majorStat.strength.GetValue();
+        float totalDamage = baseDamage + bonusDamage;
+        
+        float baseCritChance = offenseStat.critChance.GetValue();
+        float bonusCritChance = majorStat.agility.GetValue() * 0.3f;
+        float totalCritChance = baseCritChance + bonusCritChance;
+
+        float baseCritPow = offenseStat.critPower.GetValue();
+        float bonusCritPow = majorStat.strength.GetValue() * 0.5f;
+        float totalCritPow = (baseCritPow + bonusCritPow) / 100;
+
+        isCrit = Random.Range(0, 100) < totalCritChance;
+        float finalDamage = isCrit ? totalDamage * totalCritPow : totalDamage;
+
+        return finalDamage;
+    }
+
     public float GetMaxHealth()
     {
-        float baseValue = maxHealth.GetValue();
-        float bonusHp = majorStat.vitality.GetValue() * 5;
+        float baseHealth = maxHealth.GetValue();
+        float bonusHealth = majorStat.vitality.GetValue() * 5;
+        float totalMaxHealth = baseHealth + bonusHealth;
 
-        return baseValue + bonusHp;
+        return totalMaxHealth;
     }
 
     public float GetEvasion()
     {
-        float baseValue = defenseStat.evasion.GetValue();
-        float bonusEvasion = majorStat.agility.GetValue() * 0.5f;
+        float baseEvade = defenseStat.evasion.GetValue();
+        float bonusEvade = majorStat.agility.GetValue() * 0.5f;
 
-        return baseValue + bonusEvasion;
+        float totalEvasion = baseEvade + bonusEvade;
+
+        float evasionCap = 80f;
+        float finalEvasion = Mathf.Clamp(totalEvasion, 0, evasionCap);
+
+        return finalEvasion;
+    }
+
+    public float GetArmorMitigation(float attackerArmorReduction)
+    {
+        float baseArmor = defenseStat.armor.GetValue();
+        float bonusArmor = majorStat.vitality.GetValue();
+        float totalArmor = baseArmor + bonusArmor;
+
+        float reductionMultiplier = Mathf.Clamp01(1 - attackerArmorReduction);
+        float effectiveArmor = totalArmor * reductionMultiplier;
+
+        float mitigation = effectiveArmor / (effectiveArmor + 100);
+        float mitigationCap = 0.85f;
+        float finalMitigation = Mathf.Clamp(mitigation, 0, mitigationCap);
+
+        return finalMitigation;
+    }
+
+    public float GetArmorReduction()
+    {
+        float finalReduction = offenseStat.armorReduction.GetValue() / 100;
+        return finalReduction;
     }
 }

@@ -22,6 +22,7 @@ public class Chest : MonoBehaviour, IDamagable
         anim.SetBool("open", true);
         rb.linearVelocity = knockback;
         rb.angularVelocity = Random.Range(-60f, 60f);
+
         return true;
     }
 }
