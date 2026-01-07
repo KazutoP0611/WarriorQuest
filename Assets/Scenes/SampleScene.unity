@@ -608,11 +608,11 @@ MonoBehaviour:
     armorReduction:
       baseValue: 0
     fireDamage:
-      baseValue: 0
+      baseValue: 10
     iceDamage:
-      baseValue: 0
-    lightingDamage:
-      baseValue: 0
+      baseValue: 7
+    lightningDamage:
+      baseValue: 8
   defenseStat:
     armor:
       baseValue: 0
@@ -8108,7 +8108,7 @@ MonoBehaviour:
       baseValue: 0
     iceDamage:
       baseValue: 0
-    lightingDamage:
+    lightningDamage:
       baseValue: 0
   defenseStat:
     armor:
