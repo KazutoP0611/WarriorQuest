@@ -94,7 +94,48 @@ public class Player : CharacterEntity
     {
         base.CharacterOnDead();
 
+        if (slowDownCoroutine != null)
+            StopCoroutine(slowDownCoroutine);
+
         OnPlayerDead?.Invoke();
         stateMachine.ChangeState(deadState);
+    }
+
+    protected override IEnumerator SlowDownCharacterCo(float duration, float slowMultiplier)
+    {
+        float defaultMoveSpeed = moveSpeed;
+        float defaultJumpForce = jumpForce;
+        float defaultAnimSpeed = anim.speed;
+        Vector2 defaultWallJumpForce = wallJumpForce;
+        Vector2 defaultJumpAttackVelocity = jumpAttackVelocity;
+        Vector2[] defaultAttackVelocity = new Vector2[attackVelocityArray.Length];
+        Array.Copy(attackVelocityArray, defaultAttackVelocity, attackVelocityArray.Length);
+
+        float speedMultiplier = 1 - slowMultiplier;
+
+        moveSpeed *= speedMultiplier;
+        jumpForce *= speedMultiplier;
+        anim.speed *= speedMultiplier;
+        wallJumpForce *= speedMultiplier;
+        jumpAttackVelocity *= speedMultiplier;
+
+        for (int i = 0; i < attackVelocityArray.Length; i++)
+        {
+            attackVelocityArray[i] *= speedMultiplier;
+        }
+
+        yield return new WaitForSeconds(duration);
+
+        moveSpeed = defaultMoveSpeed;
+        jumpForce = defaultJumpForce;
+        anim.speed = defaultAnimSpeed;
+        wallJumpForce = defaultWallJumpForce;
+        jumpAttackVelocity = defaultJumpAttackVelocity;
+        //attackVelocityArray = defaultAttackVelocity;
+
+        for (int i = 0; i < attackVelocityArray.Length; i++)
+        {
+            attackVelocityArray[i] = defaultAttackVelocity[i];
+        }
     }
 }

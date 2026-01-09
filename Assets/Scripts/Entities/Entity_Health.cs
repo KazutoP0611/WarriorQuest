@@ -33,7 +33,7 @@ public class Entity_Health : MonoBehaviour, IDamagable
         UpdateHealthBar();
     }
 
-    public virtual bool TakeDamage(float damage, float elementalDamage, Transform damageDealer)
+    public virtual bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageDealer)
     {
         if (isDead)
             return false;
@@ -45,24 +45,33 @@ public class Entity_Health : MonoBehaviour, IDamagable
         float attackerArmorReduction = attackStats != null ? attackStats.GetArmorReduction() : 0;
 
         float mitigation = stats.GetArmorMitigation(attackerArmorReduction);
-        float finalDamage = damage * (1 - mitigation);
+        float physicalDamageTaken = damage * (1 - mitigation);
 
+        float elementalResistance = stats.GetElementalResistance(element);
+        float elementalDamageTaken = elementalDamage * (1 - elementalResistance);
+
+        TakeKnockBack(damageDealer, physicalDamageTaken);
+        ReduceHP(physicalDamageTaken + elementalDamageTaken);
+
+        //Debug.Log($"First elemental damage : {elementalDamage} and Elemental damage taken : {elementalDamageTaken} and physical damage is {finalDamage}");
+
+        return true;
+    }
+
+    private void TakeKnockBack(Transform damageDealer, float finalDamage)
+    {
         Vector2 knockback = CalculateKnockback(finalDamage, damageDealer);
         float duration = CalculateDuration(finalDamage);
 
         charEntity?.RecieveKnockback(knockback, duration);
-        entityVFX?.PlayOnDamageVFX();
-        ReduceHP(finalDamage);
-        
-        Debug.Log($"Elemental damage taken : {elementalDamage}");
-
-        return true;
     }
 
     private bool AttackEvaded() => Random.Range(0, 100) < stats.GetEvasion();
 
     protected void ReduceHP(float damage)
     {
+        entityVFX?.PlayOnDamageVFX();
+
         currentHP -= damage;
         UpdateHealthBar();
 

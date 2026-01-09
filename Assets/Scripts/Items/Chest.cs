@@ -16,7 +16,7 @@ public class Chest : MonoBehaviour, IDamagable
         entityVFX = GetComponent<Entity_VFX>();
     }
 
-    public bool TakeDamage(float damage, float elementalDamage, Transform damageDealer)
+    public bool TakeDamage(float damage, float elementalDamage, ElementType element, Transform damageDealer)
     {
         entityVFX?.PlayOnDamageVFX();
         anim.SetBool("open", true);

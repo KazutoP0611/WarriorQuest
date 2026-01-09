@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : CharacterEntity
@@ -116,6 +118,25 @@ public class Enemy : CharacterEntity
         base.CharacterOnDead();
 
         stateMachine.ChangeState(enemyDeadState);
+    }
+
+    protected override IEnumerator SlowDownCharacterCo(float duration, float slowMultiplier)
+    {
+        float defaultMoveSpeed = moveSpeed;
+        float defaultBattleMoveSpeed = battleMoveSpeed;
+        float defaultAnimSpeed = anim.speed;
+
+        float speedMultiplier = 1 - slowMultiplier;
+
+        moveSpeed *= speedMultiplier;
+        battleMoveSpeed *= speedMultiplier;
+        anim.speed *= speedMultiplier;
+
+        yield return new WaitForSeconds(duration);
+
+        moveSpeed = defaultMoveSpeed;
+        battleMoveSpeed = defaultBattleMoveSpeed;
+        anim.speed = defaultAnimSpeed;
     }
 
     protected override void OnDrawGizmos()

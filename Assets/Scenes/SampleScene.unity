@@ -369,9 +369,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onDamageMaterial: {fileID: 2100000, guid: 8b016158120ce4a4792453c2d5955306, type: 2}
   onDamageVFXDuration: 0.15
-  doDamageColor: {r: 1, g: 1, b: 1, a: 1}
+  hitVFXColor: {r: 1, g: 1, b: 1, a: 1}
   hitVFX: {fileID: 0}
   critHitVFX: {fileID: 0}
+  chillVFXColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &341213853
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,6 +389,7 @@ GameObject:
   - component: {fileID: 341213862}
   - component: {fileID: 341213861}
   - component: {fileID: 341213863}
+  - component: {fileID: 341213864}
   m_Layer: 8
   m_Name: Enemy_Skeleton
   m_TagString: Untagged
@@ -537,6 +539,8 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
+  defaultEffectDuration: 3
+  slowMultiplier: 0.35
 --- !u!114 &341213861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -570,9 +574,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onDamageMaterial: {fileID: 2100000, guid: 8b016158120ce4a4792453c2d5955306, type: 2}
   onDamageVFXDuration: 0.15
-  doDamageColor: {r: 1, g: 0.31139502, b: 0, a: 1}
+  hitVFXColor: {r: 1, g: 0, b: 0, a: 1}
   hitVFX: {fileID: 320273418006944707, guid: dfd860a272afe4645903264e1c6c138e, type: 3}
   critHitVFX: {fileID: 3332369707367497804, guid: 3da6e81394f93a94589ce32d61204fb2, type: 3}
+  chillVFXColor: {r: 0, g: 1, b: 1, a: 1}
   useAttackAlert: 1
   attackAlert: {fileID: 1911795233}
 --- !u!114 &341213863
@@ -588,7 +593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entity_Stats
   maxHealth:
-    baseValue: 1000
+    baseValue: 100
   majorStat:
     strength:
       baseValue: 0
@@ -608,11 +613,11 @@ MonoBehaviour:
     armorReduction:
       baseValue: 0
     fireDamage:
-      baseValue: 10
+      baseValue: 0
     iceDamage:
-      baseValue: 7
+      baseValue: 100
     lightningDamage:
-      baseValue: 8
+      baseValue: 0
   defenseStat:
     armor:
       baseValue: 0
@@ -622,8 +627,20 @@ MonoBehaviour:
       baseValue: 0
     iceRes:
       baseValue: 0
-    lightingRes:
+    lightningRes:
       baseValue: 0
+--- !u!114 &341213864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 341213853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f77c691abccf419245af8dc5d2e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Entity_StatusHandler
 --- !u!1 &351055799
 GameObject:
   m_ObjectHideFlags: 0
@@ -7893,6 +7910,7 @@ GameObject:
   - component: {fileID: 2092951081}
   - component: {fileID: 2092951082}
   - component: {fileID: 2092951084}
+  - component: {fileID: 2092951085}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -8032,9 +8050,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onDamageMaterial: {fileID: 2100000, guid: 8b016158120ce4a4792453c2d5955306, type: 2}
   onDamageVFXDuration: 0.15
-  doDamageColor: {r: 0.9771824, g: 1, b: 0, a: 1}
+  hitVFXColor: {r: 1, g: 0.8746387, b: 0.4292453, a: 1}
   hitVFX: {fileID: 320273418006944707, guid: dfd860a272afe4645903264e1c6c138e, type: 3}
   critHitVFX: {fileID: 3332369707367497804, guid: 3da6e81394f93a94589ce32d61204fb2, type: 3}
+  chillVFXColor: {r: 0.3726415, g: 0.6732151, b: 1, a: 1}
 --- !u!114 &2092951082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8071,6 +8090,8 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 768
+  defaultEffectDuration: 3
+  slowMultiplier: 1
   counterRecovery: 0.5
 --- !u!114 &2092951084
 MonoBehaviour:
@@ -8107,7 +8128,7 @@ MonoBehaviour:
     fireDamage:
       baseValue: 0
     iceDamage:
-      baseValue: 0
+      baseValue: 10
     lightningDamage:
       baseValue: 0
   defenseStat:
@@ -8116,11 +8137,23 @@ MonoBehaviour:
     evasion:
       baseValue: 0
     fireRes:
-      baseValue: 0
+      baseValue: 75
     iceRes:
+      baseValue: 50
+    lightningRes:
       baseValue: 0
-    lightingRes:
-      baseValue: 0
+--- !u!114 &2092951085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092951074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f77c691abccf419245af8dc5d2e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Entity_StatusHandler
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

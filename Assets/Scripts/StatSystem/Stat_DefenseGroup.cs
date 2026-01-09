@@ -11,5 +11,5 @@ public class Stat_DefenseGroup
     //Resistance
     public Stat fireRes;
     public Stat iceRes;
-    public Stat lightingRes;
+    public Stat lightningRes;
 }

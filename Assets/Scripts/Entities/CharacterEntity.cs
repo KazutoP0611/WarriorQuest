@@ -10,6 +10,7 @@ public class CharacterEntity : MonoBehaviour
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
     protected StateMachine stateMachine;
+    protected Coroutine slowDownCoroutine;
 
     private bool facingRight = true;
     public int facingDirection { get; private set; } = 1;
@@ -113,6 +114,20 @@ public class CharacterEntity : MonoBehaviour
     public virtual void CharacterOnDead()
     {
 
+    }
+
+    public virtual void SlowDownCharacterBy(float duration, float slowMultiplier)
+    {
+        if (slowDownCoroutine != null)
+            StopCoroutine(slowDownCoroutine);
+
+        slowDownCoroutine = StartCoroutine(SlowDownCharacterCo(duration, slowMultiplier));
+    }
+
+    protected virtual IEnumerator SlowDownCharacterCo(float duration, float slowMultiplier)
+    {
+        //Debug.Log("Slow Down");
+        yield return null;
     }
 
     protected virtual void OnDrawGizmos()
