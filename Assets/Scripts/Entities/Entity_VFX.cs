@@ -16,6 +16,7 @@ public class Entity_VFX : MonoBehaviour
 
     [Header("Element Colors")]
     [SerializeField] private Color chillVFXColor = Color.cyan;
+    [SerializeField] private Color burnVFXColor = Color.orangeRed;
 
     private CharacterEntity entity;
     private SpriteRenderer spriteRenderer;
@@ -54,6 +55,7 @@ public class Entity_VFX : MonoBehaviour
                 hitVFXColor = defaultHitVFXColor;
                 break;
             case ElementType.Fire:
+                hitVFXColor = burnVFXColor;
                 break;
             case ElementType.Ice:
                 hitVFXColor = chillVFXColor;
@@ -88,6 +90,7 @@ public class Entity_VFX : MonoBehaviour
         switch (element)
         {
             case ElementType.Fire:
+                effectColor = burnVFXColor;
                 break;
             case ElementType.Ice:
                 effectColor = chillVFXColor;

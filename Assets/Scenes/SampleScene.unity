@@ -373,6 +373,7 @@ MonoBehaviour:
   hitVFX: {fileID: 0}
   critHitVFX: {fileID: 0}
   chillVFXColor: {r: 0, g: 1, b: 1, a: 1}
+  burnVFXColor: {r: 1, g: 0.2705882, b: 0, a: 1}
 --- !u!1 &341213853
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,7 +578,8 @@ MonoBehaviour:
   hitVFXColor: {r: 1, g: 0, b: 0, a: 1}
   hitVFX: {fileID: 320273418006944707, guid: dfd860a272afe4645903264e1c6c138e, type: 3}
   critHitVFX: {fileID: 3332369707367497804, guid: 3da6e81394f93a94589ce32d61204fb2, type: 3}
-  chillVFXColor: {r: 0, g: 1, b: 1, a: 1}
+  chillVFXColor: {r: 0.37254903, g: 0.6745098, b: 1, a: 1}
+  burnVFXColor: {r: 1, g: 0.45882353, b: 0.13725491, a: 1}
   useAttackAlert: 1
   attackAlert: {fileID: 1911795233}
 --- !u!114 &341213863
@@ -613,9 +615,9 @@ MonoBehaviour:
     armorReduction:
       baseValue: 0
     fireDamage:
-      baseValue: 0
+      baseValue: 10
     iceDamage:
-      baseValue: 100
+      baseValue: 0
     lightningDamage:
       baseValue: 0
   defenseStat:
@@ -8054,6 +8056,7 @@ MonoBehaviour:
   hitVFX: {fileID: 320273418006944707, guid: dfd860a272afe4645903264e1c6c138e, type: 3}
   critHitVFX: {fileID: 3332369707367497804, guid: 3da6e81394f93a94589ce32d61204fb2, type: 3}
   chillVFXColor: {r: 0.3726415, g: 0.6732151, b: 1, a: 1}
+  burnVFXColor: {r: 1, g: 0.45971835, b: 0.1372549, a: 1}
 --- !u!114 &2092951082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8126,9 +8129,9 @@ MonoBehaviour:
     armorReduction:
       baseValue: 0
     fireDamage:
-      baseValue: 0
-    iceDamage:
       baseValue: 10
+    iceDamage:
+      baseValue: 0
     lightningDamage:
       baseValue: 0
   defenseStat:
@@ -8137,9 +8140,9 @@ MonoBehaviour:
     evasion:
       baseValue: 0
     fireRes:
-      baseValue: 75
+      baseValue: 0
     iceRes:
-      baseValue: 50
+      baseValue: 0
     lightningRes:
       baseValue: 0
 --- !u!114 &2092951085

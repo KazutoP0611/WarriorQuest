@@ -43,7 +43,7 @@ public class Entity_Combat : MonoBehaviour
         }
     }
 
-    public void ApplyStatusEffect(Transform target, ElementType element)
+    public void ApplyStatusEffect(Transform target, ElementType element, float scaleFactor = 1.0f)
     {
         Entity_StatusHandler statusHandler = target.GetComponent<Entity_StatusHandler>();
         if (statusHandler == null)
@@ -51,12 +51,17 @@ public class Entity_Combat : MonoBehaviour
 
         if (statusHandler.CanBeApplied(element))
         {
-            Debug.LogWarning($"Character {target.gameObject.name} get debuff element : {element}");
-            switch (element)
+            //Debug.LogWarning($"Character {target.gameObject.name} get debuff element : {element}");
+
+            if (element == ElementType.Fire)
             {
-                case ElementType.Ice:
-                    statusHandler.AppliedChillEffect(defaultEffectDuration, slowMultiplier);
-                    break;
+                float fireDamage = stats.offenseStat.fireDamage.GetValue();
+                statusHandler.ApplyBurnEffect(defaultEffectDuration, fireDamage * scaleFactor);
+            }
+
+            if (element == ElementType.Ice)
+            {
+                statusHandler.ApplyChillEffect(defaultEffectDuration, slowMultiplier * scaleFactor);
             }
         }
     }
