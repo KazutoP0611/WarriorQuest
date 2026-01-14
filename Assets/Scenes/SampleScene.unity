@@ -607,7 +607,7 @@ MonoBehaviour:
       baseValue: 0
   offenseStat:
     damage:
-      baseValue: 10
+      baseValue: 0
     critPower:
       baseValue: 0
     critChance:
@@ -615,9 +615,9 @@ MonoBehaviour:
     armorReduction:
       baseValue: 0
     fireDamage:
-      baseValue: 10
-    iceDamage:
       baseValue: 0
+    iceDamage:
+      baseValue: 30
     lightningDamage:
       baseValue: 0
   defenseStat:
