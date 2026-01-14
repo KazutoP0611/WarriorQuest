@@ -374,6 +374,7 @@ MonoBehaviour:
   critHitVFX: {fileID: 0}
   chillVFXColor: {r: 0, g: 1, b: 1, a: 1}
   burnVFXColor: {r: 1, g: 0.2705882, b: 0, a: 1}
+  lightningVFXColor: {r: 0.9803922, g: 0.9803922, b: 0.8235295, a: 1}
 --- !u!1 &341213853
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,7 +447,7 @@ Transform:
   m_GameObject: {fileID: 341213853}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.85, y: -1.75, z: 0.14400391}
+  m_LocalPosition: {x: -3.85, y: -1.75, z: 0}
   m_LocalScale: {x: 1.3, y: 1.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -542,6 +543,7 @@ MonoBehaviour:
     m_Bits: 128
   defaultEffectDuration: 3
   slowMultiplier: 0.35
+  electrifiedChargeBuildUp: 0.4
 --- !u!114 &341213861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,6 +582,7 @@ MonoBehaviour:
   critHitVFX: {fileID: 3332369707367497804, guid: 3da6e81394f93a94589ce32d61204fb2, type: 3}
   chillVFXColor: {r: 0.37254903, g: 0.6745098, b: 1, a: 1}
   burnVFXColor: {r: 1, g: 0.45882353, b: 0.13725491, a: 1}
+  lightningVFXColor: {r: 1, g: 1, b: 0, a: 1}
   useAttackAlert: 1
   attackAlert: {fileID: 1911795233}
 --- !u!114 &341213863
@@ -607,19 +610,19 @@ MonoBehaviour:
       baseValue: 0
   offenseStat:
     damage:
-      baseValue: 0
+      baseValue: 10
     critPower:
       baseValue: 0
     critChance:
-      baseValue: 0
+      baseValue: 100
     armorReduction:
       baseValue: 0
     fireDamage:
       baseValue: 0
     iceDamage:
-      baseValue: 30
-    lightningDamage:
       baseValue: 0
+    lightningDamage:
+      baseValue: 10
   defenseStat:
     armor:
       baseValue: 0
@@ -643,6 +646,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f6f77c691abccf419245af8dc5d2e44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entity_StatusHandler
+  lightningStrikeVFX: {fileID: 1488859933792421191, guid: 10524ef684aff5949a56ca92637e7b03, type: 3}
+  currentCharge: 0
+  maxCharge: 1
 --- !u!1 &351055799
 GameObject:
   m_ObjectHideFlags: 0
@@ -8057,6 +8063,7 @@ MonoBehaviour:
   critHitVFX: {fileID: 3332369707367497804, guid: 3da6e81394f93a94589ce32d61204fb2, type: 3}
   chillVFXColor: {r: 0.3726415, g: 0.6732151, b: 1, a: 1}
   burnVFXColor: {r: 1, g: 0.45971835, b: 0.1372549, a: 1}
+  lightningVFXColor: {r: 1, g: 1, b: 0, a: 1}
 --- !u!114 &2092951082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8095,6 +8102,7 @@ MonoBehaviour:
     m_Bits: 768
   defaultEffectDuration: 3
   slowMultiplier: 1
+  electrifiedChargeBuildUp: 0.4
   counterRecovery: 0.5
 --- !u!114 &2092951084
 MonoBehaviour:
@@ -8133,7 +8141,7 @@ MonoBehaviour:
     iceDamage:
       baseValue: 0
     lightningDamage:
-      baseValue: 0
+      baseValue: 10
   defenseStat:
     armor:
       baseValue: 0
@@ -8157,6 +8165,70 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f6f77c691abccf419245af8dc5d2e44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entity_StatusHandler
+  lightningStrikeVFX: {fileID: 1488859933792421191, guid: 10524ef684aff5949a56ca92637e7b03, type: 3}
+  currentCharge: 0
+  maxCharge: 1
+--- !u!1001 &9086541533800647937
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 261675588954194111, guid: 10524ef684aff5949a56ca92637e7b03, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 261675588954194111, guid: 10524ef684aff5949a56ca92637e7b03, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 261675588954194111, guid: 10524ef684aff5949a56ca92637e7b03, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261675588954194111, guid: 10524ef684aff5949a56ca92637e7b03, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 261675588954194111, guid: 10524ef684aff5949a56ca92637e7b03, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261675588954194111, guid: 10524ef684aff5949a56ca92637e7b03, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261675588954194111, guid: 10524ef684aff5949a56ca92637e7b03, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261675588954194111, guid: 10524ef684aff5949a56ca92637e7b03, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261675588954194111, guid: 10524ef684aff5949a56ca92637e7b03, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261675588954194111, guid: 10524ef684aff5949a56ca92637e7b03, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1488859933792421191, guid: 10524ef684aff5949a56ca92637e7b03, type: 3}
+      propertyPath: m_Name
+      value: VFX_LightningStrike
+      objectReference: {fileID: 0}
+    - target: {fileID: 1488859933792421191, guid: 10524ef684aff5949a56ca92637e7b03, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 10524ef684aff5949a56ca92637e7b03, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -8170,3 +8242,4 @@ SceneRoots:
   - {fileID: 341213855}
   - {fileID: 308676295}
   - {fileID: 1836141127}
+  - {fileID: 9086541533800647937}

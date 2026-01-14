@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class VFX_Controller : MonoBehaviour
 {
-    [SerializeField] private bool randomOffset = true;
     [SerializeField] private bool autoDestroy = true;
     [SerializeField] private float destroyInSecs = 1.0f;
 
@@ -14,6 +13,7 @@ public class VFX_Controller : MonoBehaviour
     [SerializeField] private float maxRotation = 360;
 
     [Header("Random Position")]
+    [SerializeField] private bool randomOffset = true;
     [SerializeField] private float xMinOffset = -0.3f;
     [SerializeField] private float xMaxOffset = 0.3f;
     [Space]

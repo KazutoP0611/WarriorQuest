@@ -17,19 +17,22 @@ public class Entity_VFX : MonoBehaviour
     [Header("Element Colors")]
     [SerializeField] private Color chillVFXColor = Color.cyan;
     [SerializeField] private Color burnVFXColor = Color.orangeRed;
+    [SerializeField] private Color lightningVFXColor = Color.lightGoldenRodYellow;
 
     private CharacterEntity entity;
+
     private SpriteRenderer spriteRenderer;
-    private Material defaultMaterial;
+    private Material originalMaterial;
+    private Color defaultHitVFXColor;
+
     private Coroutine onDamageCoroutine;
     private Coroutine onElementalEffectCoroutine;
-    private Color defaultHitVFXColor;
 
     protected virtual void Awake()
     {
         entity = GetComponent<CharacterEntity>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        defaultMaterial = spriteRenderer.material;
+        originalMaterial = spriteRenderer.material;
         defaultHitVFXColor = hitVFXColor;
     }
 
@@ -78,7 +81,7 @@ public class Entity_VFX : MonoBehaviour
         //Change character's material to "set material" on damage for a duration, the nset it back.
         spriteRenderer.material = onDamageMaterial;
         yield return new WaitForSeconds(onDamageVFXDuration);
-        spriteRenderer.material = defaultMaterial;
+        spriteRenderer.material = originalMaterial;
     }
 
     public void PlayElementalVFX(float duration, ElementType element)
@@ -96,6 +99,7 @@ public class Entity_VFX : MonoBehaviour
                 effectColor = chillVFXColor;
                 break;
             case ElementType.Lightning:
+                effectColor = lightningVFXColor;
                 break;
         }
 
@@ -124,5 +128,12 @@ public class Entity_VFX : MonoBehaviour
         spriteRenderer.color = Color.white;
 
         yield return new WaitForSeconds(duration);
+    }
+
+    public void StopAllVFX()
+    {
+        StopAllCoroutines();
+        spriteRenderer.color = Color.white;
+        spriteRenderer.material = originalMaterial;
     }
 }
