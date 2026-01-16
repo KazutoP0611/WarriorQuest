@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Entity_Stats : MonoBehaviour
@@ -25,7 +26,7 @@ public class Entity_Stats : MonoBehaviour
         float bonusCritPow = majorStat.strength.GetValue() * 0.5f;
         float totalCritPow = (baseCritPow + bonusCritPow) / 100;
 
-        isCrit = Random.Range(0, 100) < totalCritChance;
+        isCrit = UnityEngine.Random.Range(0, 100) < totalCritChance;
         float finalDamage = isCrit ? totalDamage * totalCritPow : totalDamage;
 
         return finalDamage * scaleFactor;
@@ -137,5 +138,38 @@ public class Entity_Stats : MonoBehaviour
     {
         float finalReduction = offenseStat.armorReduction.GetValue() / 100;
         return finalReduction;
+    }
+
+    public Stat GetStatByType(StatType type)
+    {
+        switch (type)
+        {
+            case StatType.MaxHealth: return resources.maxHealth;
+            case StatType.HealthRegen: return resources.healthRegen;
+
+            case StatType.Strength: return majorStat.strength;
+            case StatType.Agility: return majorStat.agility;
+            case StatType.Intelligence: return majorStat.intelligence;
+            case StatType.Vitality: return majorStat.vitality;
+
+            case StatType.AttackSpeed: return offenseStat.attackSpeed;
+            case StatType.Damage: return offenseStat.damage;
+            case StatType.CritChange: return offenseStat.critChance;
+            case StatType.CritPower: return offenseStat.critPower;
+            case StatType.ArmorReduction: return offenseStat.armorReduction;
+            case StatType.FireDamage: return offenseStat.fireDamage;
+            case StatType.IceDamage: return offenseStat.iceDamage;
+            case StatType.LightningDamage: return offenseStat.lightningDamage;
+
+            case StatType.Armor: return defenseStat.armor;
+            case StatType.Evasion: return defenseStat.evasion;
+            case StatType.FireResistance: return defenseStat.fireRes;
+            case StatType.IceResistance: return defenseStat.iceRes;
+            case StatType.LightningResistance: return defenseStat.lightningRes;
+
+            default:
+                Debug.LogWarning($"Stat Type {type} is not implemented yet.");
+                return null;
+        }
     }
 }

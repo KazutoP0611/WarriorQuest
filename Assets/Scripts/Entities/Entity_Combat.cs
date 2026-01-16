@@ -26,6 +26,9 @@ public class Entity_Combat : MonoBehaviour
 
     public void PerformAttack()
     {
+        //float damage = stats.GetPhysicalDamage(out bool isCrit);
+        //Debug.Log($"Current damage is {damage}");
+
         foreach (Collider2D target in GetDetectedColliders())
         {
             IDamagable damagable = target.GetComponent<IDamagable>();
@@ -59,13 +62,14 @@ public class Entity_Combat : MonoBehaviour
 
             if (element == ElementType.Fire)
             {
-                float fireDamage = stats.offenseStat.fireDamage.GetValue() * fireScale;
-                statusHandler.ApplyBurnEffect(defaultEffectDuration, scaleFactor);
+                float fireDamage = stats.offenseStat.fireDamage.GetValue() * scaleFactor;
+                statusHandler.ApplyBurnEffect(defaultEffectDuration, fireDamage);
             }
 
             if (element == ElementType.Ice)
             {
-                statusHandler.ApplyChillEffect(defaultEffectDuration, slowMultiplier * scaleFactor);
+                float iceDamage = slowMultiplier * scaleFactor;
+                statusHandler.ApplyChillEffect(defaultEffectDuration, iceDamage);
             }
 
             if (element == ElementType.Lightning)
