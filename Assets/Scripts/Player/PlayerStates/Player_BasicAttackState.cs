@@ -23,6 +23,8 @@ public class Player_BasicAttackState : PlayerState
     {
         base.Enter();
 
+        SyncAttackSpeed();
+
         attackQueued = false;
         ResetComboIndexIfNeeded();
 

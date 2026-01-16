@@ -9,11 +9,13 @@ public class CharacterEntity : MonoBehaviour
 
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
+    public Entity_Stats stats { get; private set; }
+    public int facingDirection { get; private set; } = 1;
+
     protected StateMachine stateMachine;
     protected Coroutine slowDownCoroutine;
 
     private bool facingRight = true;
-    public int facingDirection { get; private set; } = 1;
 
     [Header("Collision Detection")]
     [SerializeField] protected LayerMask groundLayer;
@@ -33,6 +35,7 @@ public class CharacterEntity : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        stats = GetComponentInChildren<Entity_Stats>();
 
         stateMachine = new StateMachine();
     }
