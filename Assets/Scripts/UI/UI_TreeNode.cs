@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
+    [SerializeField] private Skill_DataSO skillData;
+    [SerializeField] private string skillName;
+
     [Header("UI Details")]
     [SerializeField] private Image skillIcon;
     [Space]
@@ -17,6 +20,16 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private void Awake()
     {
         UpdateIconColor(skillLockedColor);
+    }
+
+    private void OnValidate()
+    {
+        if (skillData == null)
+            return;
+
+        skillName = skillData.displayName;
+        skillIcon.sprite = skillData.icon;
+        gameObject.name = $"UI - TreeNode - {skillData.displayName}";
     }
 
     private bool CanBeUnlocked()
