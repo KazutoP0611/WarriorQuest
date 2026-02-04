@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class UI : MonoBehaviour
 {
-    public UI_ToolTip skillToolTip;
+    public UI_SkillToolTip skillToolTip;
 
     private void Awake()
     {
-        skillToolTip = GetComponentInChildren<UI_ToolTip>();
+        skillToolTip = GetComponentInChildren<UI_SkillToolTip>();
     }
 }
