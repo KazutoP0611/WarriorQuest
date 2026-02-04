@@ -17,8 +17,15 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public bool isUnlocked = false;
     public bool isLocked = false;
 
+    private UI ui;
+    private RectTransform rect;
+
     private void Awake()
     {
+        ui = GetComponentInParent<UI>();
+        rect = GetComponent<RectTransform>();
+        //Debug.Log($"Rect transform in width : {rect.anchoredPosition.x} and height : {rect.anchoredPosition.y}");
+
         UpdateIconColor(skillLockedColor);
     }
 
@@ -64,12 +71,23 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        ui.skillToolTip.ShowToolTip(true, rect);
+
         if (isUnlocked == false)
             UpdateIconColor(highlightedColor);
     }
 
+    private Color GetColorByHex(string hexNumber)
+    {
+        ColorUtility.TryParseHtmlString(hexNumber, out Color color);
+
+        return color;
+    }
+
     public void OnPointerExit(PointerEventData eventData)
     {
+        ui.skillToolTip.ShowToolTip(false, rect);
+
         if (isUnlocked == false)
             UpdateIconColor(skillLockedColor);
     }
