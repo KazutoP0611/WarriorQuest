@@ -486,7 +486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
+  m_Color: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1162,7 +1162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1276,6 +1276,7 @@ MonoBehaviour:
   connections:
   - {fileID: 1971589665}
   - {fileID: 1244731562}
+  connectionPathOpenColor: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
 --- !u!114 &499066026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1298,8 +1299,7 @@ MonoBehaviour:
   conflictNodes:
   - {fileID: 1442831852}
   skillIcon: {fileID: 439765368}
-  skillLockedColor: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 1}
-  highlightedColor: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 1}
+  highlightenVolume: 0.6
 --- !u!1 &518220500
 GameObject:
   m_ObjectHideFlags: 0
@@ -3117,7 +3117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
+  m_Color: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3193,7 +3193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
+  m_Color: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8087,7 +8087,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8373,7 +8373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
+  m_Color: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8724,8 +8724,7 @@ MonoBehaviour:
   neededNodes: []
   conflictNodes: []
   skillIcon: {fileID: 1206440527}
-  skillLockedColor: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 1}
-  highlightedColor: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 1}
+  highlightenVolume: 0.6
 --- !u!114 &1380983269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8748,6 +8747,7 @@ MonoBehaviour:
   connections:
   - {fileID: 364214689}
   - {fileID: 113875206}
+  connectionPathOpenColor: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
 --- !u!1 &1394219427
 GameObject:
   m_ObjectHideFlags: 0
@@ -8887,8 +8887,7 @@ MonoBehaviour:
   conflictNodes:
   - {fileID: 499066026}
   skillIcon: {fileID: 1875202727}
-  skillLockedColor: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 1}
-  highlightedColor: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 1}
+  highlightenVolume: 0.6
 --- !u!114 &1442831853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8905,6 +8904,7 @@ MonoBehaviour:
   connections:
   - {fileID: 1494301660}
   - {fileID: 1240106343}
+  connectionPathOpenColor: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
 --- !u!1 &1475801984
 GameObject:
   m_ObjectHideFlags: 0
@@ -9305,7 +9305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
+  m_Color: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10061,7 +10061,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10547,7 +10547,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
+  m_Color: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

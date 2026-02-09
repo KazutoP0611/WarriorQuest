@@ -11,6 +11,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private UI_TreeConnectHandler connectHandler;
 
     private bool m_skillOnePath;
+    private Color lastColor;
 
     public bool SkillOnePath { get { return m_skillOnePath; } set { m_skillOnePath = value; } }
 
@@ -34,8 +35,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [Header("UI Details")]
     [SerializeField] private Image skillIcon;
     [Space]
-    [SerializeField] private Color skillLockedColor;
-    [SerializeField] private Color highlightedColor;
+    [SerializeField] private float highlightenVolume = 0.7f;
 
     private void Awake()
     {
@@ -43,9 +43,6 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         rect = GetComponent<RectTransform>();
         skillTree = GetComponentInParent<UI_SkillTree>();
         connectHandler = GetComponent<UI_TreeConnectHandler>();
-        //Debug.Log($"Rect transform in width : {rect.anchoredPosition.x} and height : {rect.anchoredPosition.y}");
-
-        UpdateIconColor(skillLockedColor);
     }
 
     private void OnValidate()
@@ -89,34 +86,17 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         return true;
     }
 
-    private bool CanBeUnLockedMultiplePath()
-    {
-        if (isUnlocked)
-            return false;
-
-        foreach (var node in neededNodes)
-        {
-            if (node.isUnlocked == false)
-                return false;
-        }
-
-        return true;
-    }
-
     private void Unlock()
     {
         isUnlocked = true;
         UpdateIconColor(Color.white);
 
         skillTree.RemoveSkillPoints(skillData.cost);
-        
-        //Children nodes
-        connectHandler.UnlockBelowConnectionImage(true);
+        connectHandler.UnlockBelowConnectionImage(true); //Unlock connection to children nodes;
+        connectHandler.UnlockAboveConnectionImage(true); //Unlock connection to parent nodes;
 
-        if (m_skillOnePath == false)
-            return;
-
-        LockConflictNodes();
+        if (m_skillOnePath == true)
+            LockConflictNodes();
     }
 
     private void LockConflictNodes()
@@ -124,8 +104,8 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         foreach (var node in conflictNodes)
         {
             node.isLocked = true;
+            //Lock connection to parent node of the conflict node;
             node.connectHandler.UnlockAboveConnectionImage(false); // It really works!! I didn't know I can access others private variables if it is the same class. Nice!
-            Debug.LogWarning("You have locked this node's conflict nodes! FYI for after refactor.");
         }
     }
 
@@ -134,6 +114,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (skillIcon == null)
             return;
 
+        lastColor = skillIcon.color;
         skillIcon.color = color;
     }
 
@@ -143,34 +124,18 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             Unlock();
         else
             Debug.LogWarning("Can not be unlocked!!");
-
-        //if (m_skillOnePath == true)
-        //{
-        //    #region SkillOnePath
-        //    //Use this instead if you want the skill tree to have only one path.Meaning if you unlock one path, the others path can not be use at all forever.
-        //    if (CanBeUnlocked())
-        //        Unlock();
-        //    else
-        //        Debug.LogWarning("Can not be unlocked!!");
-        //    #endregion
-        //}
-        //else
-        //{
-        //    #region SkillMultiplePath
-        //    if (CanBeUnLockedMultiplePath())
-        //        Unlock();
-        //    else
-        //        Debug.LogWarning("Can not be unlocked!!");
-        //    #endregion
-        //}
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         ui.skillToolTip.ShowToolTip(true, rect, this);
 
-        if (isUnlocked == false)
-            UpdateIconColor(highlightedColor);
+        if (isUnlocked || isLocked)
+            return;
+
+        Color color = Color.white * highlightenVolume;
+        color.a = 1f;
+        UpdateIconColor(color);
     }
 
     private Color GetColorByHex(string hexNumber)
@@ -184,7 +149,9 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         ui.skillToolTip.ShowToolTip(false, rect);
 
-        if (isUnlocked == false)
-            UpdateIconColor(skillLockedColor);
+        if (isUnlocked || isLocked)
+            return;
+
+        UpdateIconColor(lastColor);
     }
 }
