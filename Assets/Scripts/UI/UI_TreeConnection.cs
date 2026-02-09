@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum NodeDirectionType
 {
@@ -34,6 +35,8 @@ public class UI_TreeConnection : MonoBehaviour
             default: return 0f;
         }
     }
+
+    public Image GetConnectionImage() => connectionLength.GetComponent<Image>();
 
     public void DirectConnection(NodeDirectionType direction, float length)
     {

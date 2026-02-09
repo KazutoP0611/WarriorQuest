@@ -8,6 +8,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private UI ui;
     private RectTransform rect;
+    private UI_TreeConnectHandler connectHandler;
 
     private bool m_skillOnePath;
 
@@ -41,6 +42,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         ui = GetComponentInParent<UI>();
         rect = GetComponent<RectTransform>();
         skillTree = GetComponentInParent<UI_SkillTree>();
+        connectHandler = GetComponent<UI_TreeConnectHandler>();
         //Debug.Log($"Rect transform in width : {rect.anchoredPosition.x} and height : {rect.anchoredPosition.y}");
 
         UpdateIconColor(skillLockedColor);
@@ -105,7 +107,11 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         isUnlocked = true;
         UpdateIconColor(Color.white);
+
         skillTree.RemoveSkillPoints(skillData.cost);
+        
+        //Children nodes
+        connectHandler.UnlockBelowConnectionImage(true);
 
         if (m_skillOnePath == false)
             return;
@@ -118,6 +124,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         foreach (var node in conflictNodes)
         {
             node.isLocked = true;
+            node.connectHandler.UnlockAboveConnectionImage(false); // It really works!! I didn't know I can access others private variables if it is the same class. Nice!
             Debug.LogWarning("You have locked this node's conflict nodes! FYI for after refactor.");
         }
     }
