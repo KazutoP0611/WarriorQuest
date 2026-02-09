@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
+    private UI_SkillTree skillTree;
+
     private UI ui;
     private RectTransform rect;
 
@@ -11,12 +13,17 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public bool SkillOnePath { get { return m_skillOnePath; } set { m_skillOnePath = value; } }
 
+    [Header("Debug Details")]
+    [SerializeField] private int skillCost;
+
     [Header("Skill Details")]
-    [SerializeField] private Skill_DataSO skillData;
+    public Skill_DataSO skillData;
     [SerializeField] private string skillName;
 
     [Header("Status")]
     public bool isUnlocked = false;
+    [Tooltip("If you check \"Skill Tree One Path\" in UI_NodeManager, this boolean shows this skill status when player have unlocked this skill's \"Conflict Nodes\". " +
+        "Meaning, this skill can not be unlocked at all after this skill's conflict nodes has been unlocked.")]
     public bool isLocked = false;
 
     [Header("Unlock Details")]
@@ -33,6 +40,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         ui = GetComponentInParent<UI>();
         rect = GetComponent<RectTransform>();
+        skillTree = GetComponentInParent<UI_SkillTree>();
         //Debug.Log($"Rect transform in width : {rect.anchoredPosition.x} and height : {rect.anchoredPosition.y}");
 
         UpdateIconColor(skillLockedColor);
@@ -45,25 +53,36 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         skillName = skillData.displayName;
         skillIcon.sprite = skillData.icon;
+        skillCost = skillData.cost;
         gameObject.name = $"UI - TreeNode - {skillData.displayName}";
     }
 
     private bool CanBeUnlocked()
     {
+        //First check if this node can be unlocked.
         if (isLocked || isUnlocked)
             return false;
 
+        //Second check for the previous node (needed node) is unlocked.
         foreach (var node in neededNodes)
         {
             if (node.isUnlocked == false)
                 return false;
         }
 
-        foreach (var node in conflictNodes)
+        //Third check for the conflict node if skill tree is on one path setting.
+        if (m_skillOnePath == true)
         {
-            if (node.isUnlocked)
-                return false;
+            foreach (var node in conflictNodes)
+            {
+                if (node.isUnlocked)
+                    return false;
+            }
         }
+
+        //Forth check for require points the player has.
+        if (skillTree.HaveEnoughSkillPoints(skillData.cost) == false)
+            return false;
 
         return true;
     }
@@ -86,6 +105,16 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         isUnlocked = true;
         UpdateIconColor(Color.white);
+        skillTree.RemoveSkillPoints(skillData.cost);
+
+        if (m_skillOnePath == false)
+            return;
+
+        foreach (var node in conflictNodes)
+        {
+            node.isLocked = true;
+            Debug.LogWarning("You have locked this node's conflict nodes! FYI for after refactor.");
+        }
     }
 
     private void UpdateIconColor(Color color)
@@ -98,30 +127,35 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (m_skillOnePath)
-        {
-            #region SkillOnePath
-            //Use this instead if you want the skill tree to have only one path.Meaning if you unlock one path, the others path can not be use at all forever.
-            if (CanBeUnlocked())
-                Unlock();
-            else
-                Debug.LogWarning("Can not be unlocked!!");
-            #endregion
-        }
+        if (CanBeUnlocked())
+            Unlock();
         else
-        {
-            #region SkillMultiplePath
-            if (CanBeUnLockedMultiplePath())
-                Unlock();
-            else
-                Debug.LogWarning("Can not be unlocked!!");
-            #endregion
-        }
+            Debug.LogWarning("Can not be unlocked!!");
+
+        //if (m_skillOnePath == true)
+        //{
+        //    #region SkillOnePath
+        //    //Use this instead if you want the skill tree to have only one path.Meaning if you unlock one path, the others path can not be use at all forever.
+        //    if (CanBeUnlocked())
+        //        Unlock();
+        //    else
+        //        Debug.LogWarning("Can not be unlocked!!");
+        //    #endregion
+        //}
+        //else
+        //{
+        //    #region SkillMultiplePath
+        //    if (CanBeUnLockedMultiplePath())
+        //        Unlock();
+        //    else
+        //        Debug.LogWarning("Can not be unlocked!!");
+        //    #endregion
+        //}
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        ui.skillToolTip.ShowToolTip(true, rect, skillData);
+        ui.skillToolTip.ShowToolTip(true, rect, this);
 
         if (isUnlocked == false)
             UpdateIconColor(highlightedColor);

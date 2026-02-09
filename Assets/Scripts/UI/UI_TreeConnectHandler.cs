@@ -18,6 +18,9 @@ public class UI_TreeConnectHandler : MonoBehaviour
 
     private void OnValidate()
     {
+        if (connectionDetails.Length <= 0)
+            return;
+
         if (connectionDetails.Length != connections.Length)
         {
             Debug.LogWarning($"The amount of details is the same as the length of connections, Log from {gameObject.name}");

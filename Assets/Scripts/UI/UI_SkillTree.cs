@@ -1,0 +1,30 @@
+using UnityEngine;
+
+public class UI_SkillTree : MonoBehaviour
+{
+    public bool SkillTreeOnePath { get => skillTreeOnePath; private set {  skillTreeOnePath = value; } }
+
+    [SerializeField] private int skillPoints;
+
+    [Tooltip("\"Skill Tree One Path\" defines skill tree unlock path. Skill Tree One Path makes player able to unlock only one path, " +
+        "if that skill has multiple paths. Check this boolean and player will not able to unlock other paths ever. " +
+        "Uncheck this and player can unlock any path after they have unlocked previous skills, although they have unlocked other paths,")]
+    [SerializeField] private bool skillTreeOnePath = true;
+
+    private void Awake()
+    {
+        UI_TreeNode[] allSkillTreeNode = GetComponentsInChildren<UI_TreeNode>();
+
+        string debugMessage = string.Format("There are {0} skill{1} in this game.", allSkillTreeNode.Length, allSkillTreeNode.Length > 1 ? "s" : "");
+        Debug.LogWarning(debugMessage);
+
+        foreach (var treeNode in allSkillTreeNode)
+        {
+            treeNode.SkillOnePath = skillTreeOnePath;
+        }
+    }
+
+    public bool HaveEnoughSkillPoints(int cost) => skillPoints >= cost;
+
+    public void RemoveSkillPoints(int cost) => skillPoints -= cost;
+}

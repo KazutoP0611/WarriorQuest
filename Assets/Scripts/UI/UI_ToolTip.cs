@@ -7,7 +7,7 @@ public class UI_ToolTip : MonoBehaviour
     private Canvas canvas;
     private RectTransform rect;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         canvas = GetComponentInParent<Canvas>();
         rect = GetComponent<RectTransform>();
