@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class UI_SkillToolTip : UI_ToolTip
 {
+    private UI ui;
     private UI_SkillTree skillTree;
 
     [SerializeField] private TextMeshProUGUI skillNameText;
@@ -27,7 +28,8 @@ public class UI_SkillToolTip : UI_ToolTip
     {
         base.Awake();
 
-        skillTree = GetComponentInParent<UI_SkillTree>();
+        ui.GetComponentInParent<UI>();
+        skillTree = ui.GetComponentInChildren<UI_SkillTree>();
     }
 
     public void ShowToolTip(bool show, RectTransform targetRect, UI_TreeNode skillNode)

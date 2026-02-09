@@ -8,6 +8,7 @@ public class UI_TreeConnectDetails
     public UI_TreeConnectHandler handlerChildNode;
     public NodeDirectionType directionType;
     [Range(100f, 350f)] public float length;
+    [Range(-25f, 25f)] public float rotation;
 }
 
 public class UI_TreeConnectHandler : MonoBehaviour
@@ -53,12 +54,33 @@ public class UI_TreeConnectHandler : MonoBehaviour
             var detail = connectionDetails[i];
             var connection = connections[i];
 
-            connection.DirectConnection(detail.directionType, detail.length);
+            connection.DirectConnection(detail.directionType, detail.length, detail.rotation);
             Image connectionImage = connection.GetConnectionImage();
 
             Vector2 targetPoisition = connection.GetChildConnectionPoint(rect);
+
+            if (detail.handlerChildNode == null)
+                continue;
+
             detail.handlerChildNode?.SetPosition(targetPoisition);
             detail.handlerChildNode?.SetConnectionImage(connectionImage);
+            detail.handlerChildNode?.transform.SetAsLastSibling();
+            //detail.handlerChildNode?.UpdateConnection(); //This may causes problems teacher mentioned in video,
+                                                         //about doing this and you accidentally set children and
+                                                         //parent to update each other, they can shut down the application.
+        }
+    }
+
+    public void UpdateAllConnections()
+    {
+        UpdateConnection();
+
+        foreach (var childNodeDetail in connectionDetails)
+        {
+            if (childNodeDetail.handlerChildNode == null)
+                continue;
+
+            childNodeDetail.handlerChildNode.UpdateConnection();
         }
     }
 

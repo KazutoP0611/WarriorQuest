@@ -11,6 +11,8 @@ public class UI_SkillTree : MonoBehaviour
         "Uncheck this and player can unlock any path after they have unlocked previous skills, although they have unlocked other paths,")]
     [SerializeField] private bool skillTreeOnePath = true;
 
+    [SerializeField] private UI_TreeConnectHandler[] parentNodes;
+
     private void Awake()
     {
         UI_TreeNode[] allSkillTreeNode = GetComponentsInChildren<UI_TreeNode>();
@@ -27,4 +29,13 @@ public class UI_SkillTree : MonoBehaviour
     public bool HaveEnoughSkillPoints(int cost) => skillPoints >= cost;
 
     public void RemoveSkillPoints(int cost) => skillPoints -= cost;
+
+    [ContextMenu("Update All Connections")]
+    public void UpdateAllParentNodesConnections()
+    {
+        foreach (var node in parentNodes)
+        {
+            node.UpdateAllConnections();
+        }
+    }
 }
