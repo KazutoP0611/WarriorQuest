@@ -11,7 +11,6 @@ public class UI_SkillToolTip : UI_ToolTip
     [SerializeField] private TextMeshProUGUI skillDescText;
     [SerializeField] private TextMeshProUGUI skillReqiText;
     [Space]
-    [SerializeField] private GameObject skillLockOutGroup;
     [SerializeField] private TextMeshProUGUI skillLockOutTitle;
     [SerializeField] private TextMeshProUGUI skillLockText;
     [Space]
@@ -41,22 +40,19 @@ public class UI_SkillToolTip : UI_ToolTip
 
         if (skillTree.SkillTreeOnePath == false)
         {
-            skillLockOutGroup.SetActive(false);
-            //skillLockOutTitle.text = "";
-            //skillLockText.text = "";
+            skillLockOutTitle.text = "";
+            skillLockText.text = "";
             return;
         }
 
         if (skillNode.conflictNodes.Length <= 0)
         {
-            skillLockOutGroup.SetActive(false);
-            //skillLockOutTitle.text = "";
-            //skillLockText.text = "";
+            skillLockOutTitle.text = "";
+            skillLockText.text = "";
             return;
         }
 
-        skillLockOutGroup.SetActive(true);
-        //skillLockOutTitle.text = "Skill Locks Out";
+        skillLockOutTitle.text = "Skill Locks Out";
         skillLockText.text = $"{GetLocksOutNodes(skillNode.conflictNodes)}";
     }
 
