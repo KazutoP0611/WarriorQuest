@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Skill_DataSO
   cost: 3
   displayName: Healing Wisp
-  description: '- When the echo dies from enemy attack, it will release a healing
-    wisp that moves toward player character and heals on contact.'
+  description: When the echo dies from enemy attack, it will release a healing wisp
+    that moves toward player character and heals on contact.
   icon: {fileID: 951844462, guid: 2c6d4deaa401ca64390a40e39736e4dd, type: 3}

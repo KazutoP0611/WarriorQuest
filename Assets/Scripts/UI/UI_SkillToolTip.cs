@@ -1,5 +1,6 @@
 using System.Text;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class UI_SkillToolTip : UI_ToolTip
@@ -11,8 +12,11 @@ public class UI_SkillToolTip : UI_ToolTip
     [SerializeField] private TextMeshProUGUI skillDescText;
     [SerializeField] private TextMeshProUGUI skillReqiText;
     [Space]
-    [SerializeField] private TextMeshProUGUI skillLockOutTitle;
-    [SerializeField] private TextMeshProUGUI skillLockText;
+    [SerializeField] private string skillRequirementTitle = "Skill Requirements";
+    [SerializeField] private string skillLocksOuttTitle = "Locks Out";
+    [Space]
+    [TextArea]
+    [SerializeField] private string lockedSkillText = "You have taken a different path, this skill can not be unlocked.";
     [Space]
     [SerializeField] private string metConditionHexColor;
     [SerializeField] private string notMetConditionHexColor;
@@ -36,29 +40,19 @@ public class UI_SkillToolTip : UI_ToolTip
         skillNameText.text = skillNode.skillData.displayName;
         skillDescText.text = $"{skillNode.skillData.description}"; //If you want tab for text put \t in the string
 
-        skillReqiText.text = $"{GetRequirements(skillNode.skillData.cost, skillNode.neededNodes)}";
+        string skillLockedText = $"<color={urgentHexColor}>{lockedSkillText}</color>";
+        string requirementsText = skillNode.isLocked ?
+            skillLockedText :
+            $"{GetRequirements(skillNode.skillData.cost, skillNode.neededNodes, skillNode.conflictNodes)}";
 
-        if (skillTree.SkillTreeOnePath == false)
-        {
-            skillLockOutTitle.text = "";
-            skillLockText.text = "";
-            return;
-        }
-
-        if (skillNode.conflictNodes.Length <= 0)
-        {
-            skillLockOutTitle.text = "";
-            skillLockText.text = "";
-            return;
-        }
-
-        skillLockOutTitle.text = "Skill Locks Out";
-        skillLockText.text = $"{GetLocksOutNodes(skillNode.conflictNodes)}";
+        skillReqiText.text = requirementsText;
     }
 
-    private string GetRequirements(int skillCost, UI_TreeNode[] neededNoes)
+    private string GetRequirements(int skillCost, UI_TreeNode[] neededNoes, UI_TreeNode[] conflictNodes)
     {
         StringBuilder sb = new StringBuilder();
+
+        sb.AppendLine($"{skillRequirementTitle}");
 
         //I may change this into checkbox instead of changing color when met the conditions;
         string costColor = skillTree.HaveEnoughSkillPoints(skillCost) ? metConditionHexColor : notMetConditionHexColor;
@@ -71,17 +65,20 @@ public class UI_SkillToolTip : UI_ToolTip
             sb.AppendLine($"<color={neededNodeColor}> - {node.skillData.displayName}</color>");
         }
 
-        return sb.ToString();
-    }
+        //Get conflict skill nodes-----------------------
+        if (skillTree.SkillTreeOnePath == false)
+            return sb.ToString();
 
-    private string GetLocksOutNodes(UI_TreeNode[] conflictNodes)
-    {
-        StringBuilder sb = new StringBuilder();
+        if (conflictNodes.Length <= 0)
+            return sb.ToString();
 
+        sb.AppendLine();
+        sb.AppendLine($"{skillLocksOuttTitle}");
         foreach (var node in conflictNodes)
         {
             sb.AppendLine($"<color={urgentHexColor}> - {node.skillData.displayName}</color>");
         }
+        //-----------------------------------------------
 
         return sb.ToString();
     }

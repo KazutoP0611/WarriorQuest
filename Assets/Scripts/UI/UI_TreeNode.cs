@@ -110,6 +110,11 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (m_skillOnePath == false)
             return;
 
+        LockConflictNodes();
+    }
+
+    private void LockConflictNodes()
+    {
         foreach (var node in conflictNodes)
         {
             node.isLocked = true;
