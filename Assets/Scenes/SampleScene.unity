@@ -484,7 +484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1deaa355a5aa26d47bfd8a32fc72eb12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI_TreeNode
-  skillCost: 0
+  skillCost: 5
   skillData: {fileID: 11400000, guid: d7dcdbcd00f161a41ac3e7443936fa2c, type: 2}
   skillName: Cleanse
   isUnlocked: 0
@@ -517,7 +517,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -120.84912, y: -3.6511562}
+  m_AnchoredPosition: {x: -120.84906, y: -3.6511688}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &232030472
@@ -2799,6 +2799,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b9affd174139445b901382e304454b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI
+  skillTree: {fileID: 0}
   skillToolTip: {fileID: 1042635850}
 --- !u!1 &786023987
 GameObject:
@@ -9361,7 +9362,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1286664556
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9375,10 +9376,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1380983267}
-  - {fileID: 214068955}
-  - {fileID: 1891270616}
   - {fileID: 499066024}
   - {fileID: 1442831851}
+  - {fileID: 214068955}
+  - {fileID: 1891270616}
   m_Father: {fileID: 738253532}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -11507,7 +11508,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 61.230923, y: 4.768796}
+  m_AnchoredPosition: {x: 61.230957, y: 4.7687836}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1891270617
@@ -11540,7 +11541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1deaa355a5aa26d47bfd8a32fc72eb12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI_TreeNode
-  skillCost: 0
+  skillCost: 4
   skillData: {fileID: 11400000, guid: f6476c0b522c38743a877dbd2a6ac58d, type: 2}
   skillName: Enhanse Sense
   isUnlocked: 0

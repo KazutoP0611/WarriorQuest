@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a66990965b9ffd40ab8753441aca284, type: 3}
   m_Name: Skill Data - Enhance Sense
   m_EditorClassIdentifier: Assembly-CSharp::Skill_DataSO
-  cost: 0
+  cost: 4
   displayName: Enhanse Sense
   description: The Healing Wisp reduces cooldowns of your other skills by 1 second.
   icon: {fileID: 1955142047, guid: 2c6d4deaa401ca64390a40e39736e4dd, type: 3}

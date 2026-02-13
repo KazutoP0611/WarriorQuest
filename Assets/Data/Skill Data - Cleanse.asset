@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a66990965b9ffd40ab8753441aca284, type: 3}
   m_Name: Skill Data - Cleanse
   m_EditorClassIdentifier: Assembly-CSharp::Skill_DataSO
-  cost: 0
+  cost: 5
   displayName: Cleanse
   description: The Healing Wisp will remove any negative effect applied.
   icon: {fileID: 951844462, guid: 2c6d4deaa401ca64390a40e39736e4dd, type: 3}

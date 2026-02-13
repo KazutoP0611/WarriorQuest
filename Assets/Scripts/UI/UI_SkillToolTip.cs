@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Text;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class UI_SkillToolTip : UI_ToolTip
@@ -41,7 +40,7 @@ public class UI_SkillToolTip : UI_ToolTip
         base.Awake();
 
         ui = GetComponentInParent<UI>();
-        skillTree = ui.GetComponentInChildren<UI_SkillTree>();
+        skillTree = ui.GetComponentInChildren<UI_SkillTree>(true);
     }
 
     public void ShowToolTip(bool show, RectTransform targetRect, UI_TreeNode skillNode)
@@ -54,17 +53,13 @@ public class UI_SkillToolTip : UI_ToolTip
         skillNameText.text = skillNode.skillData.displayName;
         skillDescText.text = $"{skillNode.skillData.description}"; //If you want tab for text put \t in the string
 
-        string skillLockedText = $"<color={urgentHexColor}>{lockedSkillText}</color>";
+        string skillLockedText = GetColoredText(urgentHexColor, lockedSkillText);
+
         string requirementsText = skillNode.isLocked ?
             skillLockedText :
             $"{GetRequirements(skillNode.skillData.cost, skillNode.neededNodes, skillNode.conflictNodes)}";
 
         skillReqiText.text = requirementsText;
-    }
-
-    private string GetColoredText(string hexColor, string text)
-    {
-        return $"<color={hexColor}>{text}</color>";
     }
 
     private string GetRequirements(int skillCost, UI_TreeNode[] neededNoes, UI_TreeNode[] conflictNodes)
@@ -76,16 +71,18 @@ public class UI_SkillToolTip : UI_ToolTip
         //I may change this into checkbox instead of changing color when met the conditions;
         string costColor = skillTree.HaveEnoughSkillPoints(skillCost) ? metConditionHexColor : notMetConditionHexColor;
         string pluralSkillCost = skillCost == 1 ? "" : "s";
-        //sb.AppendLine($"<color={costColor}> - {skillCost} skill point{pluralSkillCost}</color>");
 
-        string text = $"{skillCost} skill point{pluralSkillCost}";
-        sb.AppendLine($" - {GetColoredText(costColor, text)}");
+        string text = $" - {skillCost} skill point{pluralSkillCost}";
+        string finalText = GetColoredText(costColor, text);
+        sb.AppendLine(finalText);
 
         foreach (var node in neededNoes)
         {
             string neededNodeColor = node.isUnlocked ? metConditionHexColor : notMetConditionHexColor;
-            //sb.AppendLine($"<color={neededNodeColor}> - {node.skillData.displayName}</color>");
-            sb.AppendLine($" - {GetColoredText(neededNodeColor, node.skillData.displayName)}");
+
+            string neededNodeDisplayName = $" - {node.skillData.displayName}";
+            string finalNeededNodeDisplayName = GetColoredText(neededNodeColor, neededNodeDisplayName);
+            sb.AppendLine(finalNeededNodeDisplayName);
         }
 
         //Get conflict skill nodes-----------------------
@@ -97,10 +94,12 @@ public class UI_SkillToolTip : UI_ToolTip
 
         sb.AppendLine();
         sb.AppendLine($"{skillLocksOuttTitle}");
+
         foreach (var node in conflictNodes)
         {
-            //sb.AppendLine($"<color={urgentHexColor}> - {node.skillData.displayName}</color>");
-            sb.AppendLine($" - {GetColoredText(urgentHexColor, node.skillData.displayName)}");
+            string conflictSkillName = $" - {node.skillData.displayName}";
+            string finalConflictSkillName = GetColoredText(urgentHexColor, conflictSkillName);
+            sb.AppendLine(finalConflictSkillName);
         }
         //-----------------------------------------------
 

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : CharacterEntity
 {
+    private UI ui;
+
     public static event Action OnPlayerDead;
     public PlayerInputSet input { get; private set; }
     public Vector2 moveInput { get; private set; }
@@ -41,6 +43,8 @@ public class Player : CharacterEntity
     {
         base.Awake();
 
+        ui = FindFirstObjectByType<UI>();
+
         input = new PlayerInputSet();
 
         idleState = new Player_IdleState(this, stateMachine, "idle");
@@ -60,8 +64,10 @@ public class Player : CharacterEntity
     {
         input.Enable();
 
-        input.Player.Movement.performed += value => { moveInput = value.ReadValue<Vector2>(); };
-        input.Player.Movement.canceled += value => { moveInput = Vector2.zero; };
+        input.Player.Movement.performed += value => moveInput = value.ReadValue<Vector2>();
+        input.Player.Movement.canceled += value => moveInput = Vector2.zero;
+
+        input.Player.ToggleSkillTreeUI.performed += value => ui.ToggleSkillTreeUI();
     }
 
     private void OnDisable()

@@ -37,6 +37,8 @@ public class UI_SkillTree : MonoBehaviour
 
     public void RemoveSkillPoints(int cost) => skillPoints = skillPoints - cost;
 
+    //Teacher said that in case, developer want to use it by using specific items or once in game or game setting in development?
+    //How far did he thought ahead!!?? That's crazy!!
     [ContextMenu("Reset All Skills")]
     public void RefundAllSkills()
     {
