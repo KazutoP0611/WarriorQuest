@@ -26,9 +26,26 @@ public class UI_SkillTree : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        UpdateAllParentNodesConnections();
+    }
+
     public bool HaveEnoughSkillPoints(int cost) => skillPoints >= cost;
 
-    public void RemoveSkillPoints(int cost) => skillPoints -= cost;
+    public void AddSkillPoints(int points) => skillPoints = skillPoints + points;
+
+    public void RemoveSkillPoints(int cost) => skillPoints = skillPoints - cost;
+
+    [ContextMenu("Reset All Skills")]
+    public void RefundAllSkills()
+    {
+        UI_TreeNode[] allSkillNodes = GetComponentsInChildren<UI_TreeNode>();
+        foreach(var node in allSkillNodes)
+        {
+            node.Refund();
+        }
+    }
 
     [ContextMenu("Update All Connections")]
     public void UpdateAllParentNodesConnections()

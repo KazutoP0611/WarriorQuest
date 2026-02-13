@@ -16,12 +16,15 @@ public class UI_TreeConnectHandler : MonoBehaviour
     private RectTransform rect => GetComponent<RectTransform>();
 
     private Image connectionFromParent;
-    private Color originalColor;
+    //private Color originalColor;
 
     [SerializeField] private UI_TreeConnectDetails[] connectionDetails;
     [SerializeField] private UI_TreeConnection[] connections;
     [Space]
     [SerializeField] private Color connectionPathOpenColor;
+    //This is my implementation
+    [SerializeField] private Color connectionLockedColor;
+    //-------------------------
 
     private void OnValidate()
     {
@@ -37,11 +40,11 @@ public class UI_TreeConnectHandler : MonoBehaviour
         UpdateConnection();
     }
 
-    private void Awake()
-    {
-        if (connectionFromParent != null)
-            originalColor = connectionFromParent.color;
-    }
+    //private void Awake()
+    //{
+    //    if (connectionFromParent != null)
+    //        originalColor = connectionFromParent.color;
+    //}
 
     public void SetPosition(Vector2 position) => rect.anchoredPosition = position;
 
@@ -84,17 +87,19 @@ public class UI_TreeConnectHandler : MonoBehaviour
         }
     }
 
+    //My implementation
     public void UnlockBelowConnectionImage(bool unlocked)
     {
         foreach (var connection in connections)
-            connection.GetConnectionImage().color = unlocked ? connectionPathOpenColor : originalColor;
+            connection.GetConnectionImage().color = unlocked ? connectionPathOpenColor : connectionLockedColor;
     }
+    //-----------------
 
     public void UnlockAboveConnectionImage(bool unlocked)
     {
         if (connectionFromParent == null)
             return;
 
-        connectionFromParent.color = unlocked ? Color.white : originalColor;
+        connectionFromParent.color = unlocked ? Color.white : connectionLockedColor;
     }
 }

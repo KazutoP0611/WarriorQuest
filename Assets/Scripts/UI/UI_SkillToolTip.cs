@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Text;
 using TMPro;
 using UnityEditor.Experimental.GraphView;
@@ -8,6 +9,9 @@ public class UI_SkillToolTip : UI_ToolTip
     private UI ui;
     private UI_SkillTree skillTree;
 
+    private Coroutine TextBlinkEffectCoroutine;
+
+    [Header("Tooltips Details")]
     [SerializeField] private TextMeshProUGUI skillNameText;
     [Space]
     [SerializeField] private TextMeshProUGUI skillDescText;
@@ -24,11 +28,19 @@ public class UI_SkillToolTip : UI_ToolTip
     [SerializeField] private string urgentHexColor;
     [SerializeField] private Color exampleColor;
 
+    [Header("Blink Locked Skill Details")]
+    //This settings are for skill tree one path setting. If Skill Tree is in one path setting, and a skill is unlocked.
+    //When player click on the conflict skills of unlocked skill, The requirement text field will blink follow these settings.
+    [Tooltip("Interval time between blinks")]
+    [SerializeField] private float blinkInterval = 0.15f;
+    [Tooltip("Amount of blink times")]
+    [SerializeField] private int defaultBlinkCount = 3;
+
     protected override void Awake()
     {
         base.Awake();
 
-        ui.GetComponentInParent<UI>();
+        ui = GetComponentInParent<UI>();
         skillTree = ui.GetComponentInChildren<UI_SkillTree>();
     }
 
@@ -50,6 +62,11 @@ public class UI_SkillToolTip : UI_ToolTip
         skillReqiText.text = requirementsText;
     }
 
+    private string GetColoredText(string hexColor, string text)
+    {
+        return $"<color={hexColor}>{text}</color>";
+    }
+
     private string GetRequirements(int skillCost, UI_TreeNode[] neededNoes, UI_TreeNode[] conflictNodes)
     {
         StringBuilder sb = new StringBuilder();
@@ -59,12 +76,16 @@ public class UI_SkillToolTip : UI_ToolTip
         //I may change this into checkbox instead of changing color when met the conditions;
         string costColor = skillTree.HaveEnoughSkillPoints(skillCost) ? metConditionHexColor : notMetConditionHexColor;
         string pluralSkillCost = skillCost == 1 ? "" : "s";
-        sb.AppendLine($"<color={costColor}> - {skillCost} skill point{pluralSkillCost}</color>");
+        //sb.AppendLine($"<color={costColor}> - {skillCost} skill point{pluralSkillCost}</color>");
+
+        string text = $"{skillCost} skill point{pluralSkillCost}";
+        sb.AppendLine($" - {GetColoredText(costColor, text)}");
 
         foreach (var node in neededNoes)
         {
             string neededNodeColor = node.isUnlocked ? metConditionHexColor : notMetConditionHexColor;
-            sb.AppendLine($"<color={neededNodeColor}> - {node.skillData.displayName}</color>");
+            //sb.AppendLine($"<color={neededNodeColor}> - {node.skillData.displayName}</color>");
+            sb.AppendLine($" - {GetColoredText(neededNodeColor, node.skillData.displayName)}");
         }
 
         //Get conflict skill nodes-----------------------
@@ -78,10 +99,31 @@ public class UI_SkillToolTip : UI_ToolTip
         sb.AppendLine($"{skillLocksOuttTitle}");
         foreach (var node in conflictNodes)
         {
-            sb.AppendLine($"<color={urgentHexColor}> - {node.skillData.displayName}</color>");
+            //sb.AppendLine($"<color={urgentHexColor}> - {node.skillData.displayName}</color>");
+            sb.AppendLine($" - {GetColoredText(urgentHexColor, node.skillData.displayName)}");
         }
         //-----------------------------------------------
 
         return sb.ToString();
+    }
+
+    public void ShowLockedSkillEffect()
+    {
+        if (TextBlinkEffectCoroutine != null)
+            StopCoroutine(TextBlinkEffectCoroutine);
+
+        TextBlinkEffectCoroutine = StartCoroutine(TextBlinkEffectCo(skillReqiText, blinkInterval, defaultBlinkCount));
+    }
+
+    private IEnumerator TextBlinkEffectCo(TextMeshProUGUI text, float blinkInterval, int blinkCount)
+    {
+        for (int i = 0; i < blinkCount; i++)
+        {
+            text.text = GetColoredText(notMetConditionHexColor, lockedSkillText);
+            yield return new WaitForSeconds(blinkInterval);
+
+            text.text = GetColoredText(urgentHexColor, lockedSkillText);
+            yield return new WaitForSeconds(blinkInterval);
+        }
     }
 }

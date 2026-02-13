@@ -34,6 +34,8 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     [Header("UI Details")]
     [SerializeField] private Image skillIcon;
+    [SerializeField] private Color lockedColor;
+    //[SerializeField] private string lockedColorHex; //I don't know why teacher used hex?
     [Space]
     [SerializeField] private float highlightenVolume = 0.7f;
 
@@ -43,6 +45,9 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         rect = GetComponent<RectTransform>();
         skillTree = GetComponentInParent<UI_SkillTree>();
         connectHandler = GetComponent<UI_TreeConnectHandler>();
+
+        //UpdateIconColor(GetColorByHex(lockedColorHex));
+        UpdateIconColor(lockedColor);
     }
 
     private void OnValidate()
@@ -83,7 +88,28 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (skillTree.HaveEnoughSkillPoints(skillData.cost) == false)
             return false;
 
+        //That means this can be unlocked.
         return true;
+    }
+
+    public void Refund()
+    {
+        if (isUnlocked)
+            skillTree.AddSkillPoints(skillData.cost);
+
+        isUnlocked = false;
+        isLocked = false;
+
+        //UpdateIconColor(GetColorByHex(lockedColorHex));
+        UpdateIconColor(lockedColor);
+
+        //At first, this can get bug, if call "UnlockBelow" alone. If you call both, there are no problems but I didn't like it.
+        //Because the head node doesn't have parent image connection, so they don't have original color.
+        //Now with locked color setting at connecthandler, it's fine. You can call which one you prefer.
+        connectHandler.UnlockAboveConnectionImage(false);
+        connectHandler.UnlockBelowConnectionImage(false);
+
+        //reset skills in skill manager;
     }
 
     private void Unlock()
@@ -122,8 +148,11 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (CanBeUnlocked())
             Unlock();
-        else
-            Debug.LogWarning("Can not be unlocked!!");
+        else if (isLocked)
+        {
+            //Debug.LogWarning("Can not be unlocked!!");
+            ui.skillToolTip.ShowLockedSkillEffect();
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
