@@ -50,6 +50,9 @@ public class UI_SkillToolTip : UI_ToolTip
         if (!show)
             return;
 
+        if (TextBlinkEffectCoroutine != null)
+            StopCoroutine(TextBlinkEffectCoroutine);
+
         skillNameText.text = skillNode.skillData.displayName;
         skillDescText.text = $"{skillNode.skillData.description}"; //If you want tab for text put \t in the string
 

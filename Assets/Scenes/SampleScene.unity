@@ -11362,7 +11362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI_SkillTree
   skillPoints: 20
-  skillTreeOnePath: 0
+  skillTreeOnePath: 1
   parentNodes:
   - {fileID: 1380983269}
   - {fileID: 1017251583}
