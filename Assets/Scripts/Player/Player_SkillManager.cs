@@ -1,3 +1,4 @@
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 public class Player_SkillManager : MonoBehaviour
@@ -7,5 +8,17 @@ public class Player_SkillManager : MonoBehaviour
     private void Awake()
     {
         dash = GetComponentInChildren<Skill_Dash>();
+    }
+
+    public Skill_Base GetSkillByType(SkillType type)
+    {
+        switch (type)
+        {
+            case SkillType.Dash: return dash;
+
+            default:
+                Debug.LogWarning($"SkillType: {type} is not implemented yet.");
+                return null;
+        }
     }
 }

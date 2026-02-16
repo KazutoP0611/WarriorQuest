@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class UI_SkillTree : MonoBehaviour
 {
+    public Player_SkillManager skillManager { get; private set; }
+
     public bool SkillTreeOnePath { get => skillTreeOnePath; private set {  skillTreeOnePath = value; } }
 
     [SerializeField] private int skillPoints;
@@ -15,15 +17,9 @@ public class UI_SkillTree : MonoBehaviour
 
     private void Awake()
     {
-        UI_TreeNode[] allSkillTreeNode = GetComponentsInChildren<UI_TreeNode>();
+        skillManager = FindFirstObjectByType<Player_SkillManager>();
 
-        string debugMessage = string.Format("There are {0} skill{1} in this game.", allSkillTreeNode.Length, allSkillTreeNode.Length > 1 ? "s" : "");
-        Debug.LogWarning(debugMessage);
-
-        foreach (var treeNode in allSkillTreeNode)
-        {
-            treeNode.SkillOnePath = skillTreeOnePath;
-        }
+        SetSkillUpgradePath();
     }
 
     private void Start()
@@ -39,7 +35,7 @@ public class UI_SkillTree : MonoBehaviour
 
     //Teacher said that in case, developer want to use it by using specific items or once in game or game setting in development?
     //How far did he thought ahead!!?? That's crazy!!
-    [ContextMenu("Reset All Skills")]
+    [ContextMenu("Reset All Skills Points")]
     public void RefundAllSkills()
     {
         UI_TreeNode[] allSkillNodes = GetComponentsInChildren<UI_TreeNode>();
@@ -55,6 +51,19 @@ public class UI_SkillTree : MonoBehaviour
         foreach (var node in parentNodes)
         {
             node.UpdateAllConnections();
+        }
+    }
+
+    private void SetSkillUpgradePath()
+    {
+        UI_TreeNode[] allSkillTreeNode = GetComponentsInChildren<UI_TreeNode>();
+
+        string debugMessage = string.Format("There are {0} skill{1} in this game.", allSkillTreeNode.Length, allSkillTreeNode.Length > 1 ? "s" : "");
+        Debug.LogWarning(debugMessage);
+
+        foreach (var treeNode in allSkillTreeNode)
+        {
+            treeNode.SkillOnePath = skillTreeOnePath;
         }
     }
 }

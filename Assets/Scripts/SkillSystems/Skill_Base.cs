@@ -5,6 +5,8 @@ public class Skill_Base : MonoBehaviour
     private float lastTimeUsed;
 
     [Header("General Details")]
+    [SerializeField] protected SkillType skillType;
+    [SerializeField] protected SkillUpgradeType skillUpgradeType;
     [SerializeField] private float cooldownTime;
 
     private bool OnCoolDown() => Time.time < lastTimeUsed + cooldownTime;
@@ -17,6 +19,11 @@ public class Skill_Base : MonoBehaviour
         //Make lastTimeUsed less than Time.time when start playing
         //So player can use skill immediately when game start
         lastTimeUsed = lastTimeUsed - cooldownTime;
+    }
+
+    public void SetSkillUpgrade(SkillUpgradeType upgrade)
+    {
+        skillUpgradeType = upgrade;
     }
 
     public bool CanUseSkill()

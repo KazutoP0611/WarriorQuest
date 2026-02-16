@@ -58,7 +58,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         skillName = skillData.displayName;
         skillIcon.sprite = skillData.icon;
         skillCost = skillData.cost;
-        gameObject.name = $"UI - TreeNode - {skillData.displayName}";
+        gameObject.name = $"UI_TreeNode - {skillData.displayName}";
     }
 
     private void OnDisable()
@@ -133,6 +133,8 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         if (m_skillOnePath == true)
             LockConflictNodes();
+
+        skillTree.skillManager.GetSkillByType(skillData.skillType).SetSkillUpgrade(skillData.skillUpgradeType);
     }
 
     private void LockConflictNodes()
@@ -140,6 +142,9 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         foreach (var node in conflictNodes)
         {
             node.isLocked = true;
+            //may be lock children of conflict node too. Right now if developer didn't set the children of conflict node in skill node's inspector.
+            //the children of conflict node will still ablt to be highlighted.
+
             //Lock connection to parent node of the conflict node;
             node.connectHandler.UnlockAboveConnectionImage(false); // It really works!! I didn't know I can access others private variables if it is the same class. Nice!
         }
@@ -179,8 +184,10 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         ui.skillToolTip.ShowToolTip(true, rect, this);
 
-        if (isUnlocked == false || isLocked == false)
-            ToggleNodeHighlight(true);
+        if (isUnlocked || isLocked)
+            return;
+
+        ToggleNodeHighlight(true);
 
         //Color color = Color.white * highlightenVolume;
         //color.a = 1f;
@@ -198,8 +205,10 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         ui.skillToolTip.ShowToolTip(false, rect);
 
-        if (isUnlocked == false || isLocked == false)
-            ToggleNodeHighlight(false);
+        if (isUnlocked || isLocked)
+            return;
+
+        ToggleNodeHighlight(false);
 
         //UpdateIconColor(lastColor);
     }

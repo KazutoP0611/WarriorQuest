@@ -67,7 +67,7 @@ public class UI_TreeConnectHandler : MonoBehaviour
 
             detail.handlerChildNode?.SetPosition(targetPoisition);
             detail.handlerChildNode?.SetConnectionImage(connectionImage);
-            detail.handlerChildNode?.transform.SetAsLastSibling();
+            //detail.handlerChildNode?.transform.SetAsLastSibling(); //not working properly, needs imprement
             //detail.handlerChildNode?.UpdateConnection(); //This may causes problems teacher mentioned in video,
                                                          //about doing this and you accidentally set children and
                                                          //parent to update each other, they can shut down the application.
