@@ -19,5 +19,5 @@ public class Skill_DataSO : ScriptableObject
 public class UpgradeData
 {
     public SkillUpgradeType skillUpgradeType;
-    public float cooldown;
+    public float cooldownTime;
 }

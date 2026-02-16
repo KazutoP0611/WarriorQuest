@@ -4,6 +4,15 @@ using UnityEngine.Rendering;
 
 public class Entity_VFX : MonoBehaviour
 {
+    private CharacterEntity entity;
+
+    private Material originalMaterial;
+    private Color defaultHitVFXColor;
+    protected SpriteRenderer spriteRenderer;
+
+    private Coroutine onDamageCoroutine;
+    private Coroutine onElementalEffectCoroutine;
+
     [Header("On Taking Damage VFX")]
     [SerializeField] private Material onDamageMaterial;
     [SerializeField] private float onDamageVFXDuration = 0.1f;
@@ -18,15 +27,6 @@ public class Entity_VFX : MonoBehaviour
     [SerializeField] private Color chillVFXColor = Color.cyan;
     [SerializeField] private Color burnVFXColor = Color.orangeRed;
     [SerializeField] private Color lightningVFXColor = Color.lightGoldenRodYellow;
-
-    private CharacterEntity entity;
-
-    private SpriteRenderer spriteRenderer;
-    private Material originalMaterial;
-    private Color defaultHitVFXColor;
-
-    private Coroutine onDamageCoroutine;
-    private Coroutine onElementalEffectCoroutine;
 
     protected virtual void Awake()
     {

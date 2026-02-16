@@ -656,6 +656,7 @@ MonoBehaviour:
   skillIcon: {fileID: 89070318}
   lockedColor: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 1}
   highlightenVolume: 0.6
+  unHighlightenVolume: 0.25
 --- !u!1 &170900217
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,6 +792,7 @@ MonoBehaviour:
   skillIcon: {fileID: 1580325551}
   lockedColor: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 1}
   highlightenVolume: 0.6
+  unHighlightenVolume: 0.25
 --- !u!224 &214068955
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2503,6 +2505,7 @@ MonoBehaviour:
   skillIcon: {fileID: 439765368}
   lockedColor: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 1}
   highlightenVolume: 0.6
+  unHighlightenVolume: 0.25
 --- !u!1 &518220500
 GameObject:
   m_ObjectHideFlags: 0
@@ -4983,6 +4986,7 @@ MonoBehaviour:
   skillIcon: {fileID: 815906800}
   lockedColor: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 1}
   highlightenVolume: 0.6
+  unHighlightenVolume: 0.25
 --- !u!1 &942849321
 GameObject:
   m_ObjectHideFlags: 0
@@ -5475,6 +5479,7 @@ MonoBehaviour:
   skillIcon: {fileID: 1106723191}
   lockedColor: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 1}
   highlightenVolume: 0.6
+  unHighlightenVolume: 0.25
 --- !u!1 &1023488451
 GameObject:
   m_ObjectHideFlags: 0
@@ -11894,6 +11899,7 @@ MonoBehaviour:
   skillIcon: {fileID: 1206440527}
   lockedColor: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 1}
   highlightenVolume: 0.6
+  unHighlightenVolume: 0.25
 --- !u!114 &1380983269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12136,6 +12142,7 @@ MonoBehaviour:
   skillIcon: {fileID: 1875202727}
   lockedColor: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 1}
   highlightenVolume: 0.6
+  unHighlightenVolume: 0.25
 --- !u!114 &1442831853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14576,6 +14583,7 @@ MonoBehaviour:
   skillIcon: {fileID: 1897714370}
   lockedColor: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 1}
   highlightenVolume: 0.6
+  unHighlightenVolume: 0.25
 --- !u!1 &1897714368
 GameObject:
   m_ObjectHideFlags: 0
@@ -14744,6 +14752,7 @@ MonoBehaviour:
   skillIcon: {fileID: 1329287776}
   lockedColor: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 1}
   highlightenVolume: 0.6
+  unHighlightenVolume: 0.25
 --- !u!1 &1909106385
 GameObject:
   m_ObjectHideFlags: 0
@@ -15361,6 +15370,7 @@ MonoBehaviour:
   skillIcon: {fileID: 712888256}
   lockedColor: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 1}
   highlightenVolume: 0.6
+  unHighlightenVolume: 0.25
 --- !u!1 &2046253752
 GameObject:
   m_ObjectHideFlags: 0
@@ -15577,7 +15587,7 @@ GameObject:
   - component: {fileID: 2092951077}
   - component: {fileID: 2092951078}
   - component: {fileID: 2092951083}
-  - component: {fileID: 2092951081}
+  - component: {fileID: 2092951087}
   - component: {fileID: 2092951082}
   - component: {fileID: 2092951084}
   - component: {fileID: 2092951085}
@@ -15708,26 +15718,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.23650277}
   m_Size: {x: 0.9, y: 1.9530056}
   m_Direction: 0
---- !u!114 &2092951081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2092951074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ce1450324ead7c49a6f6161f028e081, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onDamageMaterial: {fileID: 2100000, guid: 8b016158120ce4a4792453c2d5955306, type: 2}
-  onDamageVFXDuration: 0.15
-  hitVFXColor: {r: 1, g: 0.8746387, b: 0.4292453, a: 1}
-  hitVFX: {fileID: 320273418006944707, guid: dfd860a272afe4645903264e1c6c138e, type: 3}
-  critHitVFX: {fileID: 3332369707367497804, guid: 3da6e81394f93a94589ce32d61204fb2, type: 3}
-  chillVFXColor: {r: 0.3726415, g: 0.6732151, b: 1, a: 1}
-  burnVFXColor: {r: 1, g: 0.45971835, b: 0.1372549, a: 1}
-  lightningVFXColor: {r: 1, g: 1, b: 0, a: 1}
 --- !u!114 &2092951082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15873,6 +15863,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a673426a7158f24ba4512beb7ed66c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player_SkillManager
+--- !u!114 &2092951087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092951074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c68b017296714a0478982a37bb3b7b70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player_VFX
+  onDamageMaterial: {fileID: 2100000, guid: 8b016158120ce4a4792453c2d5955306, type: 2}
+  onDamageVFXDuration: 0.15
+  hitVFXColor: {r: 1, g: 0.8745098, b: 0.42745098, a: 1}
+  hitVFX: {fileID: 320273418006944707, guid: dfd860a272afe4645903264e1c6c138e, type: 3}
+  critHitVFX: {fileID: 3332369707367497804, guid: 3da6e81394f93a94589ce32d61204fb2, type: 3}
+  chillVFXColor: {r: 0.37254903, g: 0.6745098, b: 1, a: 1}
+  burnVFXColor: {r: 1, g: 0.45882353, b: 0.13725491, a: 1}
+  lightningVFXColor: {r: 1, g: 1, b: 0, a: 1}
+  imageEchoInterval: 0.08
+  echoVFX: {fileID: 1693548377306329162, guid: e5039e60fa9dbce45b72bf5145c5f382, type: 3}
 --- !u!1 &2106667635
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ public class Skill_Base : MonoBehaviour
     private bool OnCoolDown() => Time.time < lastTimeUsed + cooldownTime;
     private void ResetCooldownBy(float cooldownReduction) => lastTimeUsed = lastTimeUsed + cooldownReduction; //make last time player used this skill more closer to current time
     private void ResetCooldown() => lastTimeUsed = Time.time;
+    protected bool IsSkillUnlocked(SkillUpgradeType checkSkillUpgradeType) => checkSkillUpgradeType == skillUpgradeType;
     public void SetSkillOnCooldown() => lastTimeUsed = Time.time;
 
     protected virtual void Awake()
@@ -21,9 +22,10 @@ public class Skill_Base : MonoBehaviour
         lastTimeUsed = lastTimeUsed - cooldownTime;
     }
 
-    public void SetSkillUpgrade(SkillUpgradeType upgrade)
+    public void SetSkillUpgrade(UpgradeData upgradeData)
     {
-        skillUpgradeType = upgrade;
+        skillUpgradeType = upgradeData.skillUpgradeType;
+        cooldownTime = upgradeData.cooldownTime;
     }
 
     public bool CanUseSkill()

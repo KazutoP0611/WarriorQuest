@@ -5,7 +5,7 @@ public enum SkillUpgradeType
     // ------ Dash Tree ------
     Dash,
     Dash_CloneOnStart,
-    Dash_CloneOnStartAndArrival,
+    Dash_CloneOnStartAndEnd,
     Dash_ShardOnStart,
-    Dash_ShardOnStartAndArrival
+    Dash_ShardOnStartAndEnd
 }

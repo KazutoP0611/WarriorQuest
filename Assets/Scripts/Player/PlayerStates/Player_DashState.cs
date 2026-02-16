@@ -13,6 +13,9 @@ public class Player_DashState : PlayerState
     {
         base.Enter();
 
+        skillManager.dash.OnStartEffect();
+        player.vfx.CreateImageEchoEffect(player.dashDuration);
+
         dashDirection = player.moveInput.x != 0 ? ((int)player.moveInput.x) : player.facingDirection; ;
         stateTimer = player.dashDuration;
 
@@ -34,6 +37,9 @@ public class Player_DashState : PlayerState
                 stateMachine.ChangeState(player.idleState);
             else
                 stateMachine.ChangeState(player.fallState);
+
+            skillManager.dash.OnEndEffect();
+            //or you can call this on Exit()
         }  
     }
 

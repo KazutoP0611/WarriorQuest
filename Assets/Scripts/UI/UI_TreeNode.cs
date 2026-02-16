@@ -38,6 +38,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     //[SerializeField] private string lockedColorHex; //I don't know why teacher used hex?
     [Space]
     [SerializeField] private float highlightenVolume = 0.7f;
+    [SerializeField] private float unHighlightenVolume = 0.25f;
 
     private void Awake()
     {
@@ -134,7 +135,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (m_skillOnePath == true)
             LockConflictNodes();
 
-        skillTree.skillManager.GetSkillByType(skillData.skillType).SetSkillUpgrade(skillData.upgradeData.skillUpgradeType);
+        skillTree.skillManager.GetSkillByType(skillData.skillType).SetSkillUpgrade(skillData.upgradeData);
     }
 
     private void LockConflictNodes()
@@ -152,10 +153,10 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private void ToggleNodeHighlight(bool highlight)
     {
-        Color highlightColor = Color.white * highlightenVolume;
-        highlightColor.a = 1f;
+        float highlightMultiplayVolume = highlight ? highlightenVolume : unHighlightenVolume;
 
-        Color colorToApply = highlight ? highlightColor : lastColor;
+        Color colorToApply = Color.white * highlightMultiplayVolume;
+        colorToApply.a = 1f;
 
         UpdateIconColor(colorToApply);
     }
@@ -165,7 +166,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (skillIcon == null)
             return;
 
-        lastColor = skillIcon.color;
+        //lastColor = skillIcon.color;
         skillIcon.color = color;
     }
 
