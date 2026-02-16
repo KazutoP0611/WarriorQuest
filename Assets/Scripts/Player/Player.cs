@@ -9,7 +9,9 @@ public class Player : CharacterEntity
     public static event Action OnPlayerDead;
     public PlayerInputSet input { get; private set; }
     public Vector2 moveInput { get; private set; }
+    public Player_SkillManager skillManager { get; private set; }
 
+    #region State Variables
     public Player_IdleState idleState { get; private set; }
     public Player_MoveState moveState { get; private set; }
     public Player_JumpState jumpState { get; private set; }
@@ -21,6 +23,7 @@ public class Player : CharacterEntity
     public Player_JumpAttackState jumpAttackState { get; private set; }
     public Player_CounterAttackState counterAttackState { get; private set; }
     public Player_DeadState deadState { get; private set; }
+    #endregion
 
     [Header("Attack Details")]
     public Vector2[] attackVelocityArray;
@@ -44,8 +47,8 @@ public class Player : CharacterEntity
         base.Awake();
 
         ui = FindFirstObjectByType<UI>();
-
         input = new PlayerInputSet();
+        skillManager = GetComponent<Player_SkillManager>();
 
         idleState = new Player_IdleState(this, stateMachine, "idle");
         moveState = new Player_MoveState(this, stateMachine, "move");

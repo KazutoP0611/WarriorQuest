@@ -4,6 +4,11 @@ using UnityEngine.UI;
 
 public class Entity_Health : MonoBehaviour, IDamagable
 {
+    private CharacterEntity charEntity;
+    private Entity_Stats stats;
+    private Entity_VFX entityVFX;
+    private Slider healthBar;
+
     [SerializeField] protected float currentHealth;
     [SerializeField] protected bool isDead = false;
 
@@ -19,11 +24,6 @@ public class Entity_Health : MonoBehaviour, IDamagable
     [Header("Health Regen")]
     [SerializeField] private float regenInterval = 1.0f;
     [SerializeField] private bool canRegen = true;
-
-    private CharacterEntity charEntity;
-    private Entity_Stats stats;
-    private Entity_VFX entityVFX;
-    private Slider healthBar;
 
     protected virtual void Awake()
     {
