@@ -1,13 +1,16 @@
 using NUnit.Framework.Constraints;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Player_SkillManager : MonoBehaviour
 {
     public Skill_Dash dash { get; private set; }
+    public Skill_Shard shard { get; private set; }
 
     private void Awake()
     {
         dash = GetComponentInChildren<Skill_Dash>();
+        shard = GetComponentInChildren<Skill_Shard>();
     }
 
     public Skill_Base GetSkillByType(SkillType type)
@@ -15,6 +18,7 @@ public class Player_SkillManager : MonoBehaviour
         switch (type)
         {
             case SkillType.Dash: return dash;
+            //case SkillType.
 
             default:
                 Debug.LogWarning($"SkillType: {type} is not implemented yet.");
