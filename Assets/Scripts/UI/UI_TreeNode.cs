@@ -142,12 +142,26 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         foreach (var node in conflictNodes)
         {
-            node.isLocked = true;
             //may be lock children of conflict node too. Right now if developer didn't set the children of conflict node in skill node's inspector.
             //the children of conflict node will still ablt to be highlighted.
+            //I was right about above!!! wa ha ha ha ha!!!! now let's implement.
+            node.LockNode(true);
 
             //Lock connection to parent node of the conflict node;
             node.connectHandler.UnlockAboveConnectionImage(false); // It really works!! I didn't know I can access others private variables if it is the same class. Nice!
+        }
+    }
+
+    public void LockNode(bool lockChildNodes)
+    {
+        isLocked = true;
+
+        if (lockChildNodes == false)
+            return;
+
+        foreach (var childNode in connectHandler.GetChildNodes())
+        {
+            childNode.LockNode(true);
         }
     }
 

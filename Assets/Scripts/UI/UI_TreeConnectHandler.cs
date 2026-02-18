@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,6 +47,19 @@ public class UI_TreeConnectHandler : MonoBehaviour
     //        originalColor = connectionFromParent.color;
     //}
 
+    public UI_TreeNode[] GetChildNodes()
+    {
+        List<UI_TreeNode> childrenToReturn = new List<UI_TreeNode>();
+
+        foreach (var node in connectionDetails)
+        {
+            if (node.handlerChildNode != null)
+                childrenToReturn.Add(node.handlerChildNode.GetComponent<UI_TreeNode>());
+        }
+
+        return childrenToReturn.ToArray();
+    }
+
     public void SetPosition(Vector2 position) => rect.anchoredPosition = position;
 
     public void SetConnectionImage(Image image) => connectionFromParent = image;
@@ -67,7 +81,7 @@ public class UI_TreeConnectHandler : MonoBehaviour
 
             detail.handlerChildNode?.SetPosition(targetPoisition);
             detail.handlerChildNode?.SetConnectionImage(connectionImage);
-            //detail.handlerChildNode?.transform.SetAsLastSibling(); //not working properly, needs imprement
+            detail.handlerChildNode?.transform.SetAsLastSibling(); //not working properly, needs imprement
             //detail.handlerChildNode?.UpdateConnection(); //This may causes problems teacher mentioned in video,
                                                          //about doing this and you accidentally set children and
                                                          //parent to update each other, they can shut down the application.
