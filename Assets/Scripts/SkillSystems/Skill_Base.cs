@@ -4,6 +4,8 @@ public class Skill_Base : MonoBehaviour
 {
     private float lastTimeUsed;
 
+    public DamageScaleData damageScaleData { get; private set; }
+
     [Header("General Details")]
     [SerializeField] protected SkillType skillType;
     [SerializeField] protected SkillUpgradeType skillUpgradeType;
@@ -35,6 +37,7 @@ public class Skill_Base : MonoBehaviour
     {
         skillUpgradeType = upgradeData.skillUpgradeType;
         cooldownTime = upgradeData.cooldownTime;
+        damageScaleData = upgradeData.damageScaleData;
     }
 
     public bool CanUseSkill()

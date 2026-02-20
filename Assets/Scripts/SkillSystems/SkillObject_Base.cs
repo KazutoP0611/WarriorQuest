@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class SkillObject_Base : MonoBehaviour
 {
+    protected Entity_Stats playerStats;
+    protected DamageScaleData damageScaleData;
+
     [SerializeField] protected LayerMask enemyLayer;
     [SerializeField] protected Transform targetCheckTransform;
     [SerializeField] protected float checkDamageRadius = 1.0f;
@@ -15,7 +18,15 @@ public class SkillObject_Base : MonoBehaviour
             if (damagable == null)
                 continue;
 
-            damagable.TakeDamage(1, 1, ElementType.None, transform);
+            ElementalEffectData elementalEffectData = new ElementalEffectData(playerStats, damageScaleData);
+
+            float physicalDamage = playerStats.GetPhysicalDamage(out bool isCrit, damageScaleData.physicalDamageScale);
+            float elementalDamage = playerStats.GetElemetalDamage(out ElementType element, damageScaleData.elementalDamageScale);
+
+            damagable.TakeDamage(physicalDamage, elementalDamage, element, transform);
+
+            if (element != ElementType.None)
+                collider.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(element, elementalEffectData);
         }
     }
 

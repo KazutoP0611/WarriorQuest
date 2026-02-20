@@ -175,10 +175,10 @@ public class Skill_Shard : Skill_Base
         currentShard = shardObject.GetComponent<SkillObject_Shard>();
 
         float detonationTime = GetDetonationTime();
-        currentShard.SetupShard(detonationTime);
+        currentShard.SetupShard(this);
     }
 
-    private float GetDetonationTime()
+    public float GetDetonationTime()
     {
         if (IsSkillUnlocked(SkillUpgradeType.Shard_Teleport) || IsSkillUnlocked(SkillUpgradeType.Shard_TeleportRewindHp))
             return shardExistDuration;

@@ -5,6 +5,8 @@ public class SkillObject_Shard : SkillObject_Base
 {
     public event Action OnExplode;
 
+    private Skill_Shard skillShard;
+
     [SerializeField] private GameObject vfxPrefab;
 
     private Transform target;
@@ -24,8 +26,15 @@ public class SkillObject_Shard : SkillObject_Base
         target = FindClosestEnemy();
     }
 
-    public void SetupShard(float detonationTime)
+    public void SetupShard(Skill_Shard skillShard)
     {
+        this.skillShard = skillShard;
+
+        playerStats = skillShard.player.stats;
+        damageScaleData = skillShard.damageScaleData;
+
+        float detonationTime = skillShard.GetDetonationTime();
+
         Invoke(nameof(Explode), detonationTime);
     }
 
