@@ -16,8 +16,18 @@ MonoBehaviour:
   cost: 0
   skillType: 0
   upgradeData:
-    skillUpgradeType: 0
-    cooldownTime: 0
+    skillUpgradeType: 1
+    cooldownTime: 1
+    damageScaleData:
+      physicalDamageScale: 1
+      elementalDamageScale: 1
+      chillDuration: 3
+      chillSlowMultiplier: 0.2
+      burnDuration: 3
+      burnDamageScale: 1
+      shockDuration: 3
+      shockDamageScale: 1
+      shockCharge: 0.4
   displayName: Quick Dash
   description: 'Dash to avoid attacks.
 

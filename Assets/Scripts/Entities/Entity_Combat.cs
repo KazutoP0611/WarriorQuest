@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Entity_Combat : MonoBehaviour
 {
+    public DamageScaleData basicAttackScale;
+
     [Header("Target Detection")]
     [SerializeField] private Transform targetCheckTransform;
     [SerializeField] private float targetCheckRadius = 1.0f;
@@ -36,46 +38,19 @@ public class Entity_Combat : MonoBehaviour
             if (damagable == null)
                 continue;
 
+            ElementalEffectData elemetalEffectData = new ElementalEffectData(stats, basicAttackScale);
+
             float damage = stats.GetPhysicalDamage(out bool isCrit);
             float elementalDamage = stats.GetElemetalDamage(out ElementType element);
             bool gotHit = damagable.TakeDamage(damage, elementalDamage, element, transform);
 
+            if (element != ElementType.None)
+                target.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(element, elemetalEffectData);
+
             if (gotHit)
             {
-                ApplyStatusEffect(target.transform, element);
-
                 entityVFX.UpdateOnHitVFXColor(element);
                 entityVFX.OnHitVFX(target.transform, isCrit);
-            }
-        }
-    }
-
-    public void ApplyStatusEffect(Transform target, ElementType element, float scaleFactor = 1.0f)
-    {
-        Entity_StatusHandler statusHandler = target.GetComponent<Entity_StatusHandler>();
-        if (statusHandler == null)
-            return;
-
-        if (statusHandler.CanBeApplied(element))
-        {
-            //Debug.LogWarning($"Character {target.gameObject.name} get debuff element : {element}");
-
-            if (element == ElementType.Fire)
-            {
-                float fireDamage = stats.offenseStat.fireDamage.GetValue() * scaleFactor;
-                statusHandler.ApplyBurnEffect(defaultEffectDuration, fireDamage);
-            }
-
-            if (element == ElementType.Ice)
-            {
-                float iceDamage = slowMultiplier * scaleFactor;
-                statusHandler.ApplyChillEffect(defaultEffectDuration, iceDamage);
-            }
-
-            if (element == ElementType.Lightning)
-            {
-                float lightningDamage = stats.offenseStat.lightningDamage.GetValue() * scaleFactor;
-                statusHandler.ApplyElectrifyEffect(defaultEffectDuration, lightningDamage, electrifiedChargeBuildUp);
             }
         }
     }

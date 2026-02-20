@@ -21,4 +21,5 @@ public class UpgradeData
 {
     public SkillUpgradeType skillUpgradeType;
     public float cooldownTime;
+    public DamageScaleData damageScaleData;
 }

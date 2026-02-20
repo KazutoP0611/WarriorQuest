@@ -2339,6 +2339,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2bab6be33262046becad05ebe5e729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  basicAttackScale:
+    physicalDamageScale: 1
+    elementalDamageScale: 1
+    chillDuration: 3
+    chillSlowMultiplier: 0.2
+    burnDuration: 3
+    burnDamageScale: 1
+    shockDuration: 3
+    shockDamageScale: 1
+    shockCharge: 0.4
   targetCheckTransform: {fileID: 100468734}
   targetCheckRadius: 1
   targetLayer:
@@ -19434,6 +19444,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cd21ed42ba23794aaa19f8602d78a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  basicAttackScale:
+    physicalDamageScale: 1
+    elementalDamageScale: 1
+    chillDuration: 3
+    chillSlowMultiplier: 0.2
+    burnDuration: 3
+    burnDamageScale: 0.8
+    shockDuration: 3
+    shockDamageScale: 2.5
+    shockCharge: 0.4
   targetCheckTransform: {fileID: 1357984943}
   targetCheckRadius: 1
   targetLayer:
@@ -19488,7 +19508,7 @@ MonoBehaviour:
       baseValue: 0
       modifiers: []
     lightningDamage:
-      baseValue: 0
+      baseValue: 10
       modifiers: []
   defenseStat:
     armor:
