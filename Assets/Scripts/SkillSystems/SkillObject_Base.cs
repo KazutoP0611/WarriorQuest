@@ -4,7 +4,8 @@ public class SkillObject_Base : MonoBehaviour
 {
     [SerializeField] protected LayerMask enemyLayer;
     [SerializeField] protected Transform targetCheckTransform;
-    [SerializeField] protected float checkRadius = 1.0f;
+    [SerializeField] protected float checkDamageRadius = 1.0f;
+    [SerializeField] protected float checkClosestEnemyRadius = 10.0f;
 
     protected virtual void DamageEnemyInRadius(Transform t, float radius)
     {
@@ -18,9 +19,26 @@ public class SkillObject_Base : MonoBehaviour
         }
     }
 
+    protected Transform FindClosestEnemy()
+    {
+        Transform target = null;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (var enemy in GetEnemiesAround(transform, checkClosestEnemyRadius))
+        {
+            float distance = Vector2.Distance(transform.position, enemy.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                target = enemy.transform;
+            }
+        }
+        return target;
+    }
+
     protected Collider2D[] GetEnemiesAround(Transform t, float radius)
     {
-        return Physics2D.OverlapCircleAll(t.position, radius);
+        return Physics2D.OverlapCircleAll(t.position, radius, enemyLayer);
     }
 
     protected virtual void OnDrawGizmos()
@@ -28,6 +46,6 @@ public class SkillObject_Base : MonoBehaviour
         if (targetCheckTransform == null)
             targetCheckTransform = transform;
 
-        Gizmos.DrawWireSphere(targetCheckTransform.position, checkRadius);
+        Gizmos.DrawWireSphere(targetCheckTransform.position, checkDamageRadius);
     }
 }

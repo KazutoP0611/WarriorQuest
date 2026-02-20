@@ -125,6 +125,14 @@ public class Entity_Health : MonoBehaviour, IDamagable
         return knockback;
     }
 
+    public float GetHealthIn01() => currentHealth / stats.GetMaxHealth();
+
+    public void SetHealthIn01(float health)
+    {
+        currentHealth = stats.GetMaxHealth() * Mathf.Clamp01(health);
+        UpdateHealthBar();
+    }
+
     private float CalculateDuration(float damage) => IsHeavyDamage(damage) ? heavyKnockbackDuration : knockbackDuration;
 
     private bool IsHeavyDamage(float damage) => (damage / stats.GetMaxHealth()) >= heavyDamageThreshold;

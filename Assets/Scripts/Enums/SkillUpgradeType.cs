@@ -14,7 +14,7 @@ public enum SkillUpgradeType
     // ------ Shard Tree -------
     Shard,
     Shard_MoveToEnemy,
-    Shard_TripleCast,
+    Shard_MultiCast,
     Shard_Teleport,
-    Shard_TeleportAndHeal
+    Shard_TeleportRewindHp
 }

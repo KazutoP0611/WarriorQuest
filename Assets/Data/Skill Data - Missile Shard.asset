@@ -10,16 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a66990965b9ffd40ab8753441aca284, type: 3}
-  m_Name: Skill Data - Quick Dash
+  m_Name: Skill Data - Missile Shard
   m_EditorClassIdentifier: Assembly-CSharp::Skill_DataSO
-  unlockByDefault: 1
-  cost: 0
-  skillType: 0
+  unlockByDefault: 0
+  cost: 2
+  skillType: 2
   upgradeData:
-    skillUpgradeType: 0
-    cooldownTime: 0
-  displayName: Quick Dash
-  description: 'Dash to avoid attacks.
-
-    You cannot tke damage while dashing.'
-  icon: {fileID: 1067749005, guid: 2c6d4deaa401ca64390a40e39736e4dd, type: 3}
+    skillUpgradeType: 7
+    cooldownTime: 4
+  displayName: Missile Shard
+  description: Shard will move towards closest enemy.
+  icon: {fileID: 1337678858, guid: 2c6d4deaa401ca64390a40e39736e4dd, type: 3}

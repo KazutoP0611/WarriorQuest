@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "RPG Setup/Skill Data", fileName = "Skill Data - ")]
 public class Skill_DataSO : ScriptableObject
 {
+    public bool unlockByDefault;
     public int cost;
     public SkillType skillType;
     public UpgradeData upgradeData;

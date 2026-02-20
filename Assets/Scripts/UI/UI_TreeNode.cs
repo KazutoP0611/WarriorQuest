@@ -51,6 +51,12 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         UpdateIconColor(lockedColor);
     }
 
+    private void Start()
+    {
+        if (skillData.unlockByDefault)
+            Unlock();
+    }
+
     private void OnValidate()
     {
         if (skillData == null)
@@ -142,7 +148,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         foreach (var node in conflictNodes)
         {
-            //may be lock children of conflict node too. Right now if developer didn't set the children of conflict node in skill node's inspector.
+            //Idea: may be lock children of conflict node too. Right now if developer didn't set the children of conflict node in skill node's inspector.
             //the children of conflict node will still ablt to be highlighted.
             //I was right about above!!! wa ha ha ha ha!!!! now let's implement.
             node.LockNode(true);
@@ -152,6 +158,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
+    //Lock this node and the children of this node too.
     public void LockNode(bool lockChildNodes)
     {
         isLocked = true;
@@ -159,6 +166,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (lockChildNodes == false)
             return;
 
+        //This will lock children of this node, and their children and on and on.
         foreach (var childNode in connectHandler.GetChildNodes())
         {
             childNode.LockNode(true);

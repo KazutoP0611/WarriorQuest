@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a66990965b9ffd40ab8753441aca284, type: 3}
   m_Name: Skill Data - Time Shard
   m_EditorClassIdentifier: Assembly-CSharp::Skill_DataSO
+  unlockByDefault: 1
   cost: 0
   skillType: 2
   upgradeData:
@@ -22,4 +23,4 @@ MonoBehaviour:
 
     The shard explodes
     when touched by an enemy or time goes up.'
-  icon: {fileID: 1511541639, guid: 2c6d4deaa401ca64390a40e39736e4dd, type: 3}
+  icon: {fileID: -672878906, guid: 2c6d4deaa401ca64390a40e39736e4dd, type: 3}

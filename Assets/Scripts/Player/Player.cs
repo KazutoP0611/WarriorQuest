@@ -73,7 +73,7 @@ public class Player : CharacterEntity
         input.Player.Movement.canceled += value => moveInput = Vector2.zero;
 
         input.Player.ToggleSkillTreeUI.performed += value => ui.ToggleSkillTreeUI();
-        input.Player.Spell.performed += value => skillManager.shard.CreateShard();
+        input.Player.Spell.performed += value => skillManager.shard.TryUseSkill();
     }
 
     private void OnDisable()
@@ -101,6 +101,8 @@ public class Player : CharacterEntity
         yield return new WaitForEndOfFrame();
         stateMachine.ChangeState(basicAttackState);
     }
+
+    public void TeleportPlayer(Vector3 position) => transform.position = position;
 
     public override void CharacterOnDead()
     {
