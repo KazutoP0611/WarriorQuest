@@ -1914,10 +1914,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 10653247}
+  - {fileID: 687704736}
+  - {fileID: 439270609}
   - {fileID: 1899858613}
   - {fileID: 46825105}
-  - {fileID: 439270609}
-  - {fileID: 687704736}
   m_Father: {fileID: 1286664556}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2355,11 +2355,6 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
-  defaultEffectDuration: 3
-  slowMultiplier: 0.35
-  electrifiedChargeBuildUp: 0.4
-  fireScale: 0.8
-  lightningScale: 2.5
 --- !u!114 &341213861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3022,10 +3017,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1380983267}
-  - {fileID: 499066024}
-  - {fileID: 1442831851}
   - {fileID: 214068955}
   - {fileID: 1891270616}
+  - {fileID: 499066024}
+  - {fileID: 1442831851}
   m_Father: {fileID: 1286664556}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -3899,7 +3894,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.0950832, y: -1.62, z: -9}
+  m_LocalPosition: {x: -2.0888891, y: -1.62, z: -9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6817,8 +6812,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1017251582}
-  - {fileID: 2001172288}
   - {fileID: 1904067396}
+  - {fileID: 2001172288}
   - {fileID: 169017939}
   - {fileID: 931344943}
   m_Father: {fileID: 1286664556}
@@ -14504,7 +14499,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.5355225, y: 0.6744995}
+  m_AnchoredPosition: {x: 3.5354614, y: 0.67448235}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1442831852
@@ -19457,11 +19452,6 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 768
-  defaultEffectDuration: 3
-  slowMultiplier: 0.2
-  electrifiedChargeBuildUp: 0.4
-  fireScale: 0.8
-  lightningScale: 2.5
   counterRecovery: 0.5
 --- !u!114 &2092951084
 MonoBehaviour:

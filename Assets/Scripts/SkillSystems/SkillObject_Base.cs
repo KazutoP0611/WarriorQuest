@@ -15,23 +15,24 @@ public class SkillObject_Base : MonoBehaviour
     {
         foreach (var collider in GetEnemiesAround(t, radius))
         {
-            Debug.LogWarning("Damage enemy is area");
-
             IDamagable damagable = collider.GetComponent<IDamagable>();
+
             if (damagable == null)
                 continue;
 
-            ElementalEffectData elementalEffectData = new ElementalEffectData(playerStats, damageScaleData);
+            AttackData attackData = playerStats.GetAttackData(damageScaleData);
+            Entity_StatusHandler statusHandler = collider.GetComponent<Entity_StatusHandler>();
 
-            float physicalDamage = playerStats.GetPhysicalDamage(out bool isCrit, damageScaleData.physicalDamageScale);
-            float elementalDamage = playerStats.GetElemetalDamage(out ElementType element, damageScaleData.elementalDamageScale);
+            float physicalDamage = attackData.physicalDamage;
+            float elementalDamage = attackData.elementalDamage;
+            ElementType element = attackData.element;
 
             usedElement = element;
 
             damagable.TakeDamage(physicalDamage, elementalDamage, element, transform);
 
             if (element != ElementType.None)
-                collider.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(element, elementalEffectData);
+                statusHandler.ApplyStatusEffect(element, attackData.elementalEffectData);
         }
     }
 

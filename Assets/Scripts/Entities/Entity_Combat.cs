@@ -9,14 +9,6 @@ public class Entity_Combat : MonoBehaviour
     [SerializeField] private float targetCheckRadius = 1.0f;
     [SerializeField] private LayerMask targetLayer;
 
-    [Header("Status Effect Details")]
-    [SerializeField] private float defaultEffectDuration = 3.0f;
-    [SerializeField] private float slowMultiplier = 0.2f;
-    [SerializeField] private float electrifiedChargeBuildUp = 0.4f;
-    [Space]
-    [SerializeField] private float fireScale = 0.8f;
-    [SerializeField] private float lightningScale = 2.5f;
-
     private Entity_VFX entityVFX;
     private Entity_Stats stats;
 
@@ -38,17 +30,20 @@ public class Entity_Combat : MonoBehaviour
             if (damagable == null)
                 continue;
 
-            ElementalEffectData elemetalEffectData = new ElementalEffectData(stats, basicAttackScale);
+            AttackData attackData = stats.GetAttackData(basicAttackScale);
+            Entity_StatusHandler statusHandler = target.GetComponent<Entity_StatusHandler>();
 
-            float damage = stats.GetPhysicalDamage(out bool isCrit);
-            float elementalDamage = stats.GetElemetalDamage(out ElementType element);
-            bool gotHit = damagable.TakeDamage(damage, elementalDamage, element, transform);
+            float physicalDamage = attackData.physicalDamage;
+            float elementalDamage = attackData.elementalDamage;
+            ElementType element = attackData.element;
+
+            bool gotHit = damagable.TakeDamage(physicalDamage, elementalDamage, element, transform);
 
             if (element != ElementType.None)
-                target.GetComponent<Entity_StatusHandler>().ApplyStatusEffect(element, elemetalEffectData);
+                statusHandler.ApplyStatusEffect(element, attackData.elementalEffectData);
 
             if (gotHit)
-                entityVFX.CreateOnHitVFX(target.transform, isCrit, element);
+                entityVFX.CreateOnHitVFX(target.transform, attackData.isCrit, element);
         }
     }
 
