@@ -18,6 +18,7 @@ public class Entity_VFX : MonoBehaviour
     [SerializeField] private float onDamageVFXDuration = 0.1f;
 
     [Header("On Doing Damage VFX")]
+    [SerializeField] protected bool useElementColorOnHitVFX = false; 
     [SerializeField] private Color hitVFXColor = Color.white;
     [SerializeField] private GameObject hitVFX;
     [Space]
@@ -26,7 +27,7 @@ public class Entity_VFX : MonoBehaviour
     [Header("Element Colors")]
     [SerializeField] private Color chillVFXColor = Color.cyan;
     [SerializeField] private Color burnVFXColor = Color.orangeRed;
-    [SerializeField] private Color lightningVFXColor = Color.lightGoldenRodYellow;
+    [SerializeField] private Color shockVFXColor = Color.lightGoldenRodYellow;
 
     protected virtual void Awake()
     {
@@ -36,13 +37,16 @@ public class Entity_VFX : MonoBehaviour
         defaultHitVFXColor = hitVFXColor;
     }
 
-    public void OnHitVFX(Transform target, bool isCrit)
+    public void CreateOnHitVFX(Transform target, bool isCrit, ElementType element)
     {
         GameObject hitPrefab = isCrit ? critHitVFX : hitVFX;
         GameObject vfx = Instantiate(hitPrefab, target.position, Quaternion.identity);
 
         if (!isCrit)
+        {
+            Color hitVFXColor = GetElementColor(useElementColorOnHitVFX ? element : ElementType.None);
             vfx.GetComponentInChildren<SpriteRenderer>().color = hitVFXColor;
+        }
         else
         {
             if (entity.facingDirection == -1)
@@ -50,21 +54,18 @@ public class Entity_VFX : MonoBehaviour
         }
     }
 
-    public void UpdateOnHitVFXColor(ElementType element)
+    public Color GetElementColor(ElementType element)
     {
-        switch (element)
+        switch(element)
         {
-            case ElementType.None:
-                hitVFXColor = defaultHitVFXColor;
-                break;
-            case ElementType.Fire:
-                hitVFXColor = burnVFXColor;
-                break;
             case ElementType.Ice:
-                hitVFXColor = chillVFXColor;
-                break;
+                return burnVFXColor;
+            case ElementType.Fire:
+                return chillVFXColor;
             case ElementType.Lightning:
-                break;
+                return shockVFXColor;
+            default:
+                return defaultHitVFXColor;
         }
     }
 
@@ -89,21 +90,7 @@ public class Entity_VFX : MonoBehaviour
         if (onElementalEffectCoroutine != null)
             StopCoroutine(onElementalEffectCoroutine);
 
-        Color effectColor = Color.white;
-        switch (element)
-        {
-            case ElementType.Fire:
-                effectColor = burnVFXColor;
-                break;
-            case ElementType.Ice:
-                effectColor = chillVFXColor;
-                break;
-            case ElementType.Lightning:
-                effectColor = lightningVFXColor;
-                break;
-        }
-
-        onElementalEffectCoroutine = StartCoroutine(PlayElementalEffectCo(duration, effectColor));
+        onElementalEffectCoroutine = StartCoroutine(PlayElementalEffectCo(duration, GetElementColor(element)));
     }
 
     private IEnumerator PlayElementalEffectCo(float duration, Color effectColor)

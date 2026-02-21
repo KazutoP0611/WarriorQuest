@@ -38,7 +38,7 @@ public class Player_DashState : PlayerState
             else
                 stateMachine.ChangeState(player.fallState);
 
-            skillManager.dash.OnEndEffect();
+            //skillManager.dash.OnEndEffect();
             //or you can call this on Exit()
         }  
     }
@@ -46,6 +46,8 @@ public class Player_DashState : PlayerState
     public override void Exit()
     {
         base.Exit();
+
+        skillManager.dash.OnEndEffect();
 
         player.SetVelocity(0, 0);
         rb.gravityScale = originalGravityScale;

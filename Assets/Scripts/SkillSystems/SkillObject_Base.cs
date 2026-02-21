@@ -4,6 +4,7 @@ public class SkillObject_Base : MonoBehaviour
 {
     protected Entity_Stats playerStats;
     protected DamageScaleData damageScaleData;
+    protected ElementType usedElement;
 
     [SerializeField] protected LayerMask enemyLayer;
     [SerializeField] protected Transform targetCheckTransform;
@@ -14,6 +15,8 @@ public class SkillObject_Base : MonoBehaviour
     {
         foreach (var collider in GetEnemiesAround(t, radius))
         {
+            Debug.LogWarning("Damage enemy is area");
+
             IDamagable damagable = collider.GetComponent<IDamagable>();
             if (damagable == null)
                 continue;
@@ -22,6 +25,8 @@ public class SkillObject_Base : MonoBehaviour
 
             float physicalDamage = playerStats.GetPhysicalDamage(out bool isCrit, damageScaleData.physicalDamageScale);
             float elementalDamage = playerStats.GetElemetalDamage(out ElementType element, damageScaleData.elementalDamageScale);
+
+            usedElement = element;
 
             damagable.TakeDamage(physicalDamage, elementalDamage, element, transform);
 

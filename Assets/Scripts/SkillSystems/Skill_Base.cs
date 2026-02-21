@@ -4,6 +4,8 @@ public class Skill_Base : MonoBehaviour
 {
     private float lastTimeUsed;
 
+    public Player player { get; private set; }
+    public Player_SkillManager skillmanager { get; private set; }
     public DamageScaleData damageScaleData { get; private set; }
 
     [Header("General Details")]
@@ -11,16 +13,16 @@ public class Skill_Base : MonoBehaviour
     [SerializeField] protected SkillUpgradeType skillUpgradeType;
     [SerializeField] protected float cooldownTime;
 
-    protected bool OnCoolDown() => Time.time < lastTimeUsed + cooldownTime;
     private void ResetCooldownBy(float cooldownReduction) => lastTimeUsed = lastTimeUsed + cooldownReduction; //make last time player used this skill more closer to current time
     private void ResetCooldown() => lastTimeUsed = Time.time;
+    protected bool OnCoolDown() => Time.time < lastTimeUsed + cooldownTime;
     protected bool IsSkillUnlocked(SkillUpgradeType checkSkillUpgradeType) => checkSkillUpgradeType == skillUpgradeType;
     public void SetSkillOnCooldown() => lastTimeUsed = Time.time;
-    public Player player { get; private set; }
 
     protected virtual void Awake()
     {
         player = GetComponentInParent<Player>();
+        skillmanager = GetComponentInParent<Player_SkillManager>();
 
         //Make lastTimeUsed less than Time.time when start playing
         //So player can use skill immediately when game start

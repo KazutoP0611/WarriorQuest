@@ -1,3 +1,4 @@
+using NUnit.Framework.Interfaces;
 using System;
 using UnityEngine;
 
@@ -38,10 +39,25 @@ public class SkillObject_Shard : SkillObject_Base
         Invoke(nameof(Explode), detonationTime);
     }
 
+    public void SetupShard(Skill_Shard skillShard, float detonationTime, bool canMove, float shardSpeed)
+    {
+        this.skillShard = skillShard;
+
+        playerStats = skillShard.player.stats;
+        damageScaleData = skillShard.damageScaleData;
+
+        Invoke(nameof(Explode), detonationTime);
+
+        if (canMove)
+            MoveTowardClosestTarget(shardSpeed);
+    }
+
     public void Explode()
     {
         DamageEnemyInRadius(transform, checkDamageRadius);
-        Instantiate(vfxPrefab, transform.position, Quaternion.identity);
+
+        GameObject vfxObject = Instantiate(vfxPrefab, transform.position, Quaternion.identity);
+        vfxObject.GetComponentInChildren<SpriteRenderer>().color = skillShard.player.vfx.GetElementColor(usedElement);
 
         OnExplode?.Invoke();
         Destroy(gameObject);

@@ -84,7 +84,6 @@ public class Skill_Shard : Skill_Base
         currentUsableAmount--;
         currentShard.MoveTowardClosestTarget(shardSpeed);
 
-
         if (currentUsableAmount <= 0)
         {
             if (normalRechargeCoroutine != null)
@@ -167,6 +166,17 @@ public class Skill_Shard : Skill_Base
 
         player.TeleportPlayer(shardPosition);
         currentShard.transform.position = playerPosition;
+    }
+
+    // A skill that is not called by casting spell, but called when dash, so it has to be automatically read, and do everything;
+    public void CreateRawShard()
+    {
+        bool canMove = IsSkillUnlocked(SkillUpgradeType.Shard_MoveToEnemy) || IsSkillUnlocked(SkillUpgradeType.Shard_MultiCast);
+
+        GameObject shardObject = Instantiate(shardPrefab, transform.position, Quaternion.identity);
+        currentShard = shardObject.GetComponent<SkillObject_Shard>();
+
+        currentShard.SetupShard(this, detonationTime, canMove, shardSpeed);
     }
 
     private void CreateShard()
