@@ -22,6 +22,11 @@ This project is being developed as part of advanced Unity architecture study (OO
 
 ---
 
+## 🎥 Gameplay Video
+[Watch Gameplay Video](https://youtu.be/Pw0lexJriPE)
+
+---
+
 ## 🧠 Advanced State Machine (OOP Architecture Highlight)
 
 The animation state flow itself is straightforward, but the strength of this project lies in the script structure.
