@@ -1,114 +1,146 @@
-# Action RPG Adventure : Warrior Quest
+# ⚔️ Warrior Quest (2D Pixel RPG System Architecture)
 
-#### 🗡️ Warrior Quest
-> A serious technical project built with Unity and C# focusing on architecture, systems design, and scalable gameplay implementation.
+#### ⚔️🛡️ Warrior Quest
+A 2D pixel RPG focused heavily on gameplay system architecture and structured OOP design.
+Although visually simple, this project contains a deeply structured character system, modular combat calculations, and an extensible skill framework.
+This project is being developed while studying advanced Unity architecture patterns (2026 Feb 27th, **STILL IN DEVELOPING**), with emphasis on:
+
+<img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/7659c8ca-9ca1-4614-8489-1c01ae126592" />
 
 ---
 
 ## ⚙️ Technical Highlights
 - Engine: Unity 6 (6000.2.9f1)
 - Programming Language: C#
+- State-driven animation control
+- Modular combat systems
+- Skill-based ability framework
+- Shared character base logic
+- Scalable RPG calculations
+- Multiple skill update choice for gameplay designer
 
 ---
 
----
+## 🧠 Advanced State Machine (OOP Architecture Highlight)
 
-## 🎮 Core Gameplay
+The animation state flow itself is straightforward, but the strength of this project lies in the script structure.
 
-* 2D Pixel RPG
-* Skill-based combat system
-* Dash movement mechanic
-* Skill unlock / lock progression
-* Multi-path skill tree support
+<img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/b961c4d1-e5e4-4db0-a42f-bda6517baf63" />
 
-Gameplay is built around structured systems rather than hardcoded logic.
+- Fully OOP-driven state system
+- Clear separation between state logic and animation transitions
+- Expandable architecture for adding new states
+- Player and enemies operate under structured state management
 
----
-
-## 🏗 Architecture Design
-
-* Heavy Object-Oriented Programming (OOP) structure
-* Shared `BaseCharacter` class for Player and Enemy
-* Modular system separation
-* Clear responsibility division between:
-
-  * Combat logic
-  * Movement logic
-  * AI logic
-  * UI logic
-
-The design emphasizes scalability and maintainability rather than quick implementation.
+This design allows flexibility without rewriting core systems.
 
 ---
 
-## 🤖 Enemy AI System
+## 🧬 Unified Character Base Class
 
-* State-machine driven behavior
-* Detection using `OverlapSphere` based sensing
-* Follow / Chase state
-* Attack state
-* Retreat / Backup state
-* Direction control
-* Layered state transitions
+Both player and enemies inherit from the same base character class.
 
-The AI is implemented using structured state management instead of large conditional branching.
+Shared systems such as:
 
-This makes behavior expansion easier and safer for future updates.
+- Entity_Health
+- Entity_Combat
+- Entity_Stats
+- Entity_VFX (manager)
 
----
-
-## ⚔ Combat Calculation System
-
-* Attack value calculation
-* Defense value calculation
-* Elemental damage processing
-* HP deduction formula based on parameters
-* Configurable balance tuning
-
-The combat system is built with parameter-driven calculations so balancing can be adjusted without rewriting core logic.
+This ensures scalability, consistency, and easier extension for future characters.
 
 ---
 
-## 🔓 Skill & Progression System
+## ⚔️ Combat & Damage Calculation System
 
-* Skill unlock / lock functionality
-* Multi-path skill tree support
-* Single-path restriction option
-* Dynamic UI path coloring
-* Visual feedback when selecting progression routes
+A parameter-driven combat calculation system including:
 
-I am particularly proud of the skill UI implementation because it dynamically reflects player progression and path selection visually.
+- Physical/Elemental attack
+- Elemental effects
+- Defense scaling
+- Elemental attack modifiers
+- Damage reduction formulas
+- Dynamic HP reduction pipeline
 
----
+<img width="348" height="679" alt="image" src="https://github.com/user-attachments/assets/ffbdb08b-069e-4511-9218-26b712cd2a7f" />
 
-## 🛠 Custom Unity Tools
+The damage calculation considers multiple parameters and modifiers to determine final HP loss.
 
-* Inspector utility extensions
-* Custom editor scripts
-* Workflow optimization tools
-
-These tools improve development efficiency and reduce repetitive setup tasks.
+The structure supports future expansion for additional elemental types and status effects.
 
 ---
 
-## 🧠 Technical Takeaways
+## 🌀 Skill System Framework
 
-* Designing scalable gameplay architecture
-* Building AI with state machines
-* Structuring large OOP-based systems
-* Implementing reusable mechanics
-* Managing system complexity as project size grows
+- Modular skill-based architecture
+- Active movement skill (Dash implemented)
+- Lock / Unlock skill logic
+- Expandable system for additional abilities
 
----
+<img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/2461d8e5-0527-4401-aa48-b6611e20626e" />
 
-## 🔮 Future Improvements
-
-* Performance optimization
-* Additional enemy behavior states
-* Expanded skill tree depth
-* Visual polish and feedback improvements
-* Refactoring for further modularity
+Skills are structured to allow clean integration without rewriting the core character logic.
 
 ---
 
-*Built in Unity using C# as a serious system engineering practice project.*
+## 🌳 Configurable Skill Unlock System (Designer-Friendly)
+
+One of the core highlights of this project is the flexible skill progression system.
+
+### Key Features:
+
+- Configurable unlock mode (Single-path or Multi-path)
+- Designer-controlled behavior via Inspector checkbox
+- No code changes required to switch progression type
+- UI dynamically updates when a skill is unlocked
+  - Head unlocked
+  <img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/778cccfa-1df9-4217-a803-7cb7f7bb4141" />
+
+  - 2nd unlocked: if skill tree is set to one path, this will lock another path skill node.
+  <img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/6a3d6e0b-9bf1-4be6-8b16-57b05edb08ec" />
+
+  - 3rd unlocked
+  <img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/bb2d2403-0a59-4ee1-9b22-dbff5b3c7d07" />
+
+- Visual connection paths change color based on chosen progression
+
+<img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/09faa78e-0e39-4ddc-907a-8c2bbf4e4b8a" />
+
+If the designer enables **Single-Path Mode**, players must commit to one progression branch.
+<img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/27e6ab84-ba59-4da8-a918-1f8b9895100d" />
+
+If disabled, players can unlock multiple paths freely.
+<img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/21aacca5-f105-4673-92f5-805ad5186a85" />
+
+All branching logic and validation are handled internally by the system.
+
+This approach ensures flexibility while keeping the implementation clean and scalable.
+
+---
+
+## 🤖 Enemy AI System (C# Only)
+
+The enemy AI system includes:
+
+- Player detection using Raycast and optimized OverlapSphere for attack (player also use this system)
+- Follow behavior
+- Attack transitions
+- Direction switching
+- Back-up logic for attack distance
+- State-based behavior management
+
+<img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/1d96b2ba-8e77-47bf-b0f3-d6d7bdf3c338" />
+
+The AI logic separates detection, decision-making, and execution to maintain clarity and expandability.
+
+---
+
+## 📌 Project Emphasis
+
+While the gameplay may appear simple externally, the internal architecture is designed to demonstrate:
+
+- System scalability
+- Clean object-oriented structure
+- Combat logic complexity
+- Flexible skill progression design
+- Expandable state-driven gameplay systems
