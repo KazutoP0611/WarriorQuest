@@ -3,7 +3,8 @@
 #### ⚔️🛡️ Warrior Quest
 A 2D pixel RPG focused heavily on gameplay system architecture and structured OOP design.
 Although visually simple, this project contains a deeply structured character system, modular combat calculations, and an extensible skill framework.
-This project is being developed while studying advanced Unity architecture patterns from [Udemy Lesson](https://www.udemy.com/course/2d-rpg-alexdev/?srsltid=AfmBOory0k406tEKDNPJ0lExmj98fc-ZNAkh5TfP8mAvwZTtPvK1OgC8) lesson, (2026 Feb 27th, **STILL IN DEVELOPING**), with emphasis on:
+This project is being developed as part of advanced Unity architecture study (OOP state systems and AI structure), with a focus on applying learned concepts into scalable gameplay systems.
+**Status:** In active development (February 2026).
 
 <img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/7659c8ca-9ca1-4614-8489-1c01ae126592" />
 
@@ -17,7 +18,7 @@ This project is being developed while studying advanced Unity architecture patte
 - Skill-based ability framework
 - Shared character base logic
 - Scalable RPG calculations
-- Multiple skill update choice for gameplay designer
+- Configurable skill progression options for designers
 
 ---
 
@@ -85,7 +86,7 @@ Skills are structured to allow clean integration without rewriting the core char
 
 ## 🌳 Configurable Skill Unlock System (Designer-Friendly)
 
-One of the core highlights of this project is the flexible skill progression system. I implemented skill tree to have multiple path system setting by boolean.
+One of the core highlights of this project is the flexible skill progression system. The skill tree progression mode is configurable via Inspector boolean flag.
 
 ### Key Features:
 
@@ -140,6 +141,7 @@ While the gameplay may appear simple externally, the internal architecture is de
 
 - System scalability
 - Clean object-oriented structure
+- Maintainable and extensible system design
 - Combat logic complexity
 - Flexible skill progression design
 - Expandable state-driven gameplay systems
