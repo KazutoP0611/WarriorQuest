@@ -93,6 +93,8 @@ One of the core highlights of this project is the flexible skill progression sys
 - Designer-controlled behavior via Inspector checkbox
 - No code changes required to switch progression type
 - UI dynamically updates when a skill is unlocked
+- Visual connection paths change color based on chosen progression
+
   - Head unlocked
   <img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/95683da3-b0b6-4738-9ef9-b4f0bc023211" />
 
@@ -102,11 +104,8 @@ One of the core highlights of this project is the flexible skill progression sys
   - 3rd unlocked
   <img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/2d1e4d25-70e6-4494-8f99-1fae0ce7ebf8" />
 
-- Visual connection paths change color based on chosen progression
-
-<img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/09faa78e-0e39-4ddc-907a-8c2bbf4e4b8a" />
-
 If the designer enables **Single-Path Mode**, players must commit to one progression branch.
+<img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/09faa78e-0e39-4ddc-907a-8c2bbf4e4b8a" />
 <img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/27e6ab84-ba59-4da8-a918-1f8b9895100d" />
 
 If disabled, players can unlock multiple paths freely.
