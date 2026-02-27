@@ -3,7 +3,7 @@
 #### ⚔️🛡️ Warrior Quest
 A 2D pixel RPG focused heavily on gameplay system architecture and structured OOP design.
 Although visually simple, this project contains a deeply structured character system, modular combat calculations, and an extensible skill framework.
-This project is being developed while studying advanced Unity architecture patterns (2026 Feb 27th, **STILL IN DEVELOPING**), with emphasis on:
+This project is being developed while studying advanced Unity architecture patterns from [Udemy Lesson](https://www.udemy.com/course/2d-rpg-alexdev/?srsltid=AfmBOory0k406tEKDNPJ0lExmj98fc-ZNAkh5TfP8mAvwZTtPvK1OgC8) lesson, (2026 Feb 27th, **STILL IN DEVELOPING**), with emphasis on:
 
 <img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/7659c8ca-9ca1-4614-8489-1c01ae126592" />
 
@@ -85,7 +85,7 @@ Skills are structured to allow clean integration without rewriting the core char
 
 ## 🌳 Configurable Skill Unlock System (Designer-Friendly)
 
-One of the core highlights of this project is the flexible skill progression system.
+One of the core highlights of this project is the flexible skill progression system. I implemented skill tree to have multiple path system setting by boolean.
 
 ### Key Features:
 
