@@ -94,13 +94,13 @@ One of the core highlights of this project is the flexible skill progression sys
 - No code changes required to switch progression type
 - UI dynamically updates when a skill is unlocked
   - Head unlocked
-  <img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/778cccfa-1df9-4217-a803-7cb7f7bb4141" />
+  <img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/95683da3-b0b6-4738-9ef9-b4f0bc023211" />
 
   - 2nd unlocked: if skill tree is set to one path, this will lock another path skill node.
-  <img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/6a3d6e0b-9bf1-4be6-8b16-57b05edb08ec" />
+  <img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/97e04727-3931-4f67-8a08-f18d332c1454" />
 
   - 3rd unlocked
-  <img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/bb2d2403-0a59-4ee1-9b22-dbff5b3c7d07" />
+  <img width="854" height="480" alt="image" src="https://github.com/user-attachments/assets/2d1e4d25-70e6-4494-8f99-1fae0ce7ebf8" />
 
 - Visual connection paths change color based on chosen progression
 
