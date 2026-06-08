@@ -111,7 +111,7 @@ public class Entity_Health : MonoBehaviour, IDamagable
         healthBar.value = currentHealth / stats.GetMaxHealth();
     }
 
-    protected void Die()
+    protected virtual void Die()
     {
         isDead = true;
         charEntity.CharacterOnDead();
