@@ -2,17 +2,22 @@ using UnityEngine;
 
 public class Player_Health : Entity_Health
 {
-    private void Update()
+    private Player player;
+
+    protected override void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.B))
-            Die();
+        base.Awake();
+
+        player = GetComponent<Player>();
     }
 
     protected override void Die()
     {
         base.Die();
 
-        GameManager.instance.SetLastPlayerPosition(transform.position);
-        GameManager.instance.RestartScene();
+        player.Dead(); // disable input;
+       
+        //GameManager.instance.SetLastPlayerPosition(transform.position);
+        //GameManager.instance.RestartScene();
     }
 }

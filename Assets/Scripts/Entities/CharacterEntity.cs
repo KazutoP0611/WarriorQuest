@@ -114,7 +114,14 @@ public class CharacterEntity : MonoBehaviour
             wallDetected = Physics2D.Raycast(primaryWallDetector.position, Vector2.right * facingDirection, wallCheckDistance, groundLayer);
     }
 
+    // Start Dying;
     public virtual void CharacterOnDead()
+    {
+
+    }
+
+    // Finished Dying;
+    public virtual void CharacterOnDied()
     {
 
     }

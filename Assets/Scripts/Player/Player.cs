@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Player : CharacterEntity
 {
-    private UI ui;
-
     public static event Action OnPlayerDead;
+
     public PlayerInputSet input { get; private set; }
-    public Vector2 moveInput { get; private set; }
+    public UI ui { get; private set; }
     public Player_SkillManager skillManager { get; private set; }
     public Player_VFX vfx { get; private set; }
+    
+    public Vector2 moveInput { get; private set; }
 
     #region State Variables
     public Player_IdleState idleState { get; private set; }
@@ -48,7 +49,10 @@ public class Player : CharacterEntity
         base.Awake();
 
         ui = FindFirstObjectByType<UI>();
+
         input = new PlayerInputSet();
+        ui.Initialize(input);
+
         skillManager = GetComponent<Player_SkillManager>();
         vfx = GetComponent<Player_VFX>();
 
@@ -72,7 +76,7 @@ public class Player : CharacterEntity
         input.Player.Movement.performed += value => moveInput = value.ReadValue<Vector2>();
         input.Player.Movement.canceled += value => moveInput = Vector2.zero;
 
-        input.Player.ToggleSkillTreeUI.performed += value => ui.ToggleSkillTreeUI();
+        //input.Player.ToggleSkillTreeUI.performed += value => ui.ToggleSkillTreeUI();
         input.Player.Spell.performed += value => skillManager.shard.TryUseSkill();
     }
 
@@ -115,6 +119,13 @@ public class Player : CharacterEntity
         stateMachine.ChangeState(deadState);
     }
 
+    public override void CharacterOnDied()
+    {
+        base.CharacterOnDied();
+
+        ui.OpenDeathScreenUI();
+    }
+
     protected override IEnumerator SlowDownCharacterCo(float duration, float slowMultiplier)
     {
         float defaultMoveSpeed = moveSpeed;
@@ -152,4 +163,6 @@ public class Player : CharacterEntity
             attackVelocityArray[i] = defaultAttackVelocity[i];
         }
     }
+
+    public void Dead() => input.Disable();
 }

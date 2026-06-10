@@ -199,13 +199,13 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         else if (isLocked)
         {
             //Debug.LogWarning("Can not be unlocked!!");
-            ui.skillToolTip.ShowLockedSkillEffect();
+            ui.skillToolTipUI.ShowLockedSkillEffect();
         }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        ui.skillToolTip.ShowToolTip(true, rect, this);
+        ui.skillToolTipUI.ShowToolTip(true, rect, this);
 
         if (isUnlocked || isLocked)
             return;
@@ -226,7 +226,7 @@ public class UI_TreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        ui.skillToolTip.ShowToolTip(false, rect);
+        ui.skillToolTipUI.ShowToolTip(false, rect);
 
         if (isUnlocked || isLocked)
             return;
