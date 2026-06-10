@@ -50,14 +50,22 @@ public class GameManager : MonoBehaviour, ISaveble
     private IEnumerator ChangeSceneCo(string sceneName)
     {
         // Fade
+        UI_FadeScreen fadeScreen = GetFadeScreen();
+        fadeScreen.FadeIn(sceneFadeDuration);
 
-        yield return new WaitForSeconds(sceneFadeDuration);
+        yield return fadeScreen.fadeCoroutine;
 
         SceneManager.LoadScene(sceneName);
 
         yield return new WaitForSeconds(0.2f);
+    }
 
-
+    private UI_FadeScreen GetFadeScreen()
+    {
+        if (UI.instance != null)
+            return UI.instance.fadeScreenUI;
+        else
+            return FindFirstObjectByType<UI_FadeScreen>();
     }
 
     //private Vector3 GetNewPlayerPosition(RespawnType respawnType)

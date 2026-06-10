@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class UI : MonoBehaviour
 {
+    public static UI instance;
+
     private bool skillTreeEnabled;
     private bool intentoryEnabled;
 
@@ -12,14 +14,27 @@ public class UI : MonoBehaviour
     public UI_SkillToolTip skillToolTipUI   { get; private set; }
     public UI_Options optionsUI             { get; private set; }
     public UI_DeathScreen deathScreenUI     { get; private set; }
+    public UI_FadeScreen fadeScreenUI       { get; private set; }
 
     [SerializeField] private GameObject[] uiElements;
 
     private void Awake()
     {
+        if (instance == null)
+            instance = this;
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        DontDestroyOnLoad(gameObject);
+
+        // Get UI components;
         skillTreeUI = GetComponentInChildren<UI_SkillTree>(true); //Added "true" in parameter to get component in children even the game object is disable.
         optionsUI = GetComponentInChildren<UI_Options>(true);
         deathScreenUI = GetComponentInChildren<UI_DeathScreen>(true);
+        fadeScreenUI = GetComponentInChildren<UI_FadeScreen>(true);
 
         skillToolTipUI = GetComponentInChildren<UI_SkillToolTip>();
 
@@ -98,6 +113,7 @@ public class UI : MonoBehaviour
     {
         skillTreeUI.transform.SetAsLastSibling();
         SetTooltipAbobe();
+        fadeScreenUI.transform.SetAsLastSibling();
 
         skillTreeEnabled = !skillTreeEnabled;
         skillTreeUI.gameObject.SetActive(skillTreeEnabled);
@@ -110,6 +126,8 @@ public class UI : MonoBehaviour
 
     public void ToggleInventoryUI()
     {
+        fadeScreenUI.transform.SetAsLastSibling();
+
         intentoryEnabled = !intentoryEnabled;
 
         SetTooltipAbobe();
@@ -169,5 +187,10 @@ public class UI : MonoBehaviour
     {
         SwitchTo(deathScreenUI.gameObject);
         // Already disable player input from player health;
+    }
+
+    public void FadeIn(float fadeInSecs)
+    {
+        fadeScreenUI.FadeIn(fadeInSecs);
     }
 }
