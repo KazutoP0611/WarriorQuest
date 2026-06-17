@@ -37,11 +37,10 @@ public class UI_FadeScreen : MonoBehaviour
     {
         float startValue = slider.value;
         float elapsedTime = 0;
-        //float multiplyValue = targetValue == 0 ? -1 : 1;
 
         while (elapsedTime < fadeInSecs)
         {
-            elapsedTime += Time.deltaTime/* * multiplyValue)*/;
+            elapsedTime += Time.deltaTime;
             float fillAmount = Mathf.Lerp(startValue, targetValue, elapsedTime / fadeInSecs);
             slider.value = fillAmount;
 

@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour, ISaveble
 
     private IEnumerator ChangeSceneCo(string sceneName)
     {
-        // Fade
+        // Fade in
         UI_FadeScreen fadeScreen = GetFadeScreen();
         fadeScreen.FadeIn(sceneFadeDuration);
 
@@ -58,6 +58,8 @@ public class GameManager : MonoBehaviour, ISaveble
         SceneManager.LoadScene(sceneName);
 
         yield return new WaitForSeconds(0.2f);
+
+        // Fade out
     }
 
     private UI_FadeScreen GetFadeScreen()

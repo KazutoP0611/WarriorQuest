@@ -7,14 +7,19 @@ public class UI : MonoBehaviour
     private bool skillTreeEnabled;
     private bool intentoryEnabled;
 
-    public bool alternativeInput { get; private set; }
+    #region Input
     private PlayerInputSet input;
+    public bool alternativeInput            { get; private set; }
+    #endregion
 
+    #region UI
     public UI_SkillTree skillTreeUI         { get; private set; }
     public UI_SkillToolTip skillToolTipUI   { get; private set; }
     public UI_Options optionsUI             { get; private set; }
     public UI_DeathScreen deathScreenUI     { get; private set; }
     public UI_FadeScreen fadeScreenUI       { get; private set; }
+    public UI_Dialogue dialogueUI           { get; private set; }
+    #endregion
 
     [SerializeField] private GameObject[] uiElements;
 
@@ -35,6 +40,7 @@ public class UI : MonoBehaviour
         optionsUI = GetComponentInChildren<UI_Options>(true);
         deathScreenUI = GetComponentInChildren<UI_DeathScreen>(true);
         fadeScreenUI = GetComponentInChildren<UI_FadeScreen>(true);
+        dialogueUI = GetComponentInChildren<UI_Dialogue>(true);
 
         skillToolTipUI = GetComponentInChildren<UI_SkillToolTip>();
 
@@ -187,6 +193,15 @@ public class UI : MonoBehaviour
     {
         SwitchTo(deathScreenUI.gameObject);
         // Already disable player input from player health;
+    }
+
+    public void OpenDialogueUI(DialogueLineSO firstLine)
+    {
+        SetPlayerControl(false);
+        HideAllTooltip();
+
+        dialogueUI.gameObject.SetActive(true);
+        dialogueUI.PlayDialogueLine(firstLine);
     }
 
     public void FadeIn(float fadeInSecs)

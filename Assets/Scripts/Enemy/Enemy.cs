@@ -120,6 +120,14 @@ public class Enemy : CharacterEntity
         stateMachine.ChangeState(enemyDeadState);
     }
 
+    public override void CharacterOnDied()
+    {
+        base.CharacterOnDied();
+
+        //maybe after dead animation, spawn something, or play some effect;
+        // because his scripts are so good, it was easy to modified;
+    }
+
     protected override IEnumerator SlowDownCharacterCo(float duration, float slowMultiplier)
     {
         float defaultMoveSpeed = moveSpeed;
